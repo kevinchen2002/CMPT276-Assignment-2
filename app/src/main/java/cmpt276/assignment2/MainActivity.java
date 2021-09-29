@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "DemoInitialApp";
 
@@ -18,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Wire up the button to do stuff
         //get the button
-        Button btn = findViewById(R.id.btnDoStuff);
+        FloatingActionButton btn = findViewById(R.id.btnAddNewGame);
         //set what happens when the user clicks
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
