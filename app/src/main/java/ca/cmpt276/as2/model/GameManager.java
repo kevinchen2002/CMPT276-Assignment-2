@@ -4,13 +4,17 @@ Game Manager stores the games as an ArrayList
 add new game, retrieve specific game from index, and removing game by index
  */
 
-package com.example.gamemodule.model;
+package ca.cmpt276.as2.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GameManager implements Iterable<Game> {
     private final ArrayList<Game> allGames = new ArrayList<>();
+
+    public ArrayList<Game> getAllGames() {
+        return allGames;
+    }
 
     /**
      * Add a game to the end of the list
@@ -57,5 +61,10 @@ public class GameManager implements Iterable<Game> {
     @Override
     public Iterator<Game> iterator() {
         return allGames.iterator();
+    }
+
+    @Override
+    public String toString() {
+        return "Dummy";
     }
 }

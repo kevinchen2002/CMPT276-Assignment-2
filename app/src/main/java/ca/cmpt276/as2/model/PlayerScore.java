@@ -1,5 +1,5 @@
 
-package com.example.gamemodule.model;
+package ca.cmpt276.as2.model;
 /**
  PlayerScore represents the score of a single player in a Game.
  take in number of cards, sum of points, and number of wager cards

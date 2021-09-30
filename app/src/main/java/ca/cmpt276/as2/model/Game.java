@@ -4,7 +4,7 @@ stores which player won the game
 //TODO: describe class better
  */
 
-package com.example.gamemodule.model;
+package ca.cmpt276.as2.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -66,5 +66,14 @@ public class Game {
      */
     public LocalDateTime getCreationDateTime() {
         return this.creationDateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "players=" + players +
+                ", winners=" + winners +
+                ", creationDateTime=" + creationDateTime +
+                '}';
     }
 }
