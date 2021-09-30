@@ -5,8 +5,12 @@ stores which player won the game
  */
 
 package ca.cmpt276.as2.model;
+import androidx.annotation.NonNull;
+
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
 
 public class Game {
     private final ArrayList<PlayerScore> players = new ArrayList<>();
@@ -68,17 +72,54 @@ public class Game {
         return this.creationDateTime;
     }
 
+    @NonNull
     @Override
     public String toString() {
-        //return "Game{" +
-//                "players=" + players +
-//                ", winners=" + winners +
-//                ", creationDateTime=" + creationDateTime +
-//                '}';
-        String gameString = "";
-        gameString += creationDateTime.toString();
-        gameString += " - Player " + winners + "won: ";
-        gameString += "Insert scores here?";
-        return gameString;
+//        //return "Game{" +
+////                "players=" + players +
+////                ", winners=" + winners +
+////                ", creationDateTime=" + creationDateTime +
+////                '}';
+//        String gameString = "";
+//        gameString += creationDateTime.toString();
+//        gameString += " - Player " + winners + "won: ";
+//        gameString += "Insert scores here?";
+//        return gameString;
+
+        //print all the player's scores
+        StringBuilder gameDetails = new StringBuilder();
+
+        for (int i = 0; i < this.getPlayerCount(); i++) {
+            gameDetails.append(this.getScoresAt(i));
+            //only prints vs. between games and not at the end
+            if (!(i ==(this.getPlayerCount() - 1))) {
+                gameDetails.append(" vs. ");
+            }
+        }
+
+        //print winners
+        int winnerCount = this.getWinnerCount();
+        gameDetails.append(", Winning player" );
+
+        //ensures proper grammar when printing winners
+        if (winnerCount > 1) {
+            gameDetails.append("s");
+        }
+        gameDetails.append(": ");
+
+        for (int i = 0; i < winnerCount; i++) {
+            gameDetails.append(this.getWinnersNumAt(i));
+            //correctly places commas between winners
+            if (!(i == (winnerCount - 1))) {
+                gameDetails.append(", ");
+            }
+        }
+
+        //code learned from https://mkyong.com/java8/java-8-how-to-format-localdatetime/
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDatetime = this.getCreationDateTime().format(formatter);
+        gameDetails.append(" (").append(formattedDatetime).append(")\n");
+
+        return gameDetails.toString();
     }
 }
