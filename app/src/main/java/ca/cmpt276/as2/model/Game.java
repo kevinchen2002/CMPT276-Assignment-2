@@ -15,7 +15,15 @@ import java.util.ArrayList;
 public class Game {
     private final ArrayList<PlayerScore> players = new ArrayList<>();
     private final ArrayList<PlayerScore> winners = new ArrayList<>();
-    private final LocalDateTime creationDateTime = LocalDateTime.now();
+    private final LocalDateTime creationDateTime;
+
+    public Game() {
+        this.creationDateTime = LocalDateTime.now();
+    }
+
+    public Game(LocalDateTime createTimeAndDate) {
+        this.creationDateTime = createTimeAndDate;
+    }
 
     /**
      * Add a single player to a game.
