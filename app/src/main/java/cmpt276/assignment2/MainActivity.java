@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 //Intent launchNewGame = new Intent(MainActivity.this, AddGameActivity.class);
                 Intent launchNewGame = GameActivity.makeIntent(MainActivity.this);
                 startActivity(launchNewGame);
+
             }
         });
     }
@@ -63,15 +64,18 @@ public class MainActivity extends AppCompatActivity {
         testGame2.addPlayer(new PlayerScore(1, 3,5,6));
         testGame2.addPlayer(new PlayerScore(2, 3,5,6));
 
-        test.addGame(testGame);
-        test.addGame(testGame2);
+//        test.addGame(testGame);
+//        test.addGame(testGame2);
 
         List<String> toString = test.getAllGames().stream().map(Game::toString).collect(Collectors.toList());
 
         ListView listView = (ListView) findViewById(R.id.gameListView);
         ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, toString);
+        adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
     }
+
+
 
     /*
     Code taken from Brian Fraser's Basic ListView Demo
