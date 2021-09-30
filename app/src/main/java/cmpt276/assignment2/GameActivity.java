@@ -32,8 +32,6 @@ public class GameActivity extends AppCompatActivity {
         TextView dateCreateText = (TextView) findViewById(R.id.dateCreateText);
         dateCreateText.setText(gameCreationDateTime.toString());
 
-        endActivityButton();
-
         Intent intent = getIntent();
         int gameIndex = intent.getIntExtra("gamePosition", -1);
         int p1NumCards = intent.getIntExtra("p1NumCards", 0);
@@ -61,22 +59,22 @@ public class GameActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Edit Game");
         }
 
-        endActivityButton();
+        endActivityButton(gameIndex);
 
     }
 
-    private void endActivityButton() {
+    private void endActivityButton(int gameIndex) {
         Button btn = (Button) findViewById(R.id.end_add_game);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enterCards();
+                enterCards(gameIndex);
                 finish();
             }
         });
     }
 
-    private void enterCards() {
+    private void enterCards(int gameIndex) {
         try {
 
             EditText p1TextEntry = (EditText) findViewById(R.id.p1NumCards);
@@ -107,7 +105,14 @@ public class GameActivity extends AppCompatActivity {
             Game testGame = new Game(gameCreationDateTime);
             testGame.addPlayer(new PlayerScore(1, p1NumCards, p1Sum, p1Wagers));
             testGame.addPlayer(new PlayerScore(2, p2NumCards, p2Sum, p2Wagers));
-            test.addGame(testGame);
+
+            if (gameIndex == -1) {
+                test.addGame(testGame);
+            }
+            else {
+                test.replaceGame(gameIndex, testGame);
+            }
+
 
             Log.i("DemoInitialApp", "Player 1: " + p1NumCards);
             Log.i("DemoInitialApp", "Player 2: " + p2NumCards);

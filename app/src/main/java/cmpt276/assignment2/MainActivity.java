@@ -65,9 +65,6 @@ public class MainActivity extends AppCompatActivity {
         testGame2.addPlayer(new PlayerScore(1, 20,5,6));
         testGame2.addPlayer(new PlayerScore(2, 30,5,6));
 
-        test.addGame(testGame);
-        test.addGame(testGame2);
-
         List<String> toString = test.getAllGames().stream().map(Game::toString).collect(Collectors.toList());
 
         ListView listView = (ListView) findViewById(R.id.gameListView);

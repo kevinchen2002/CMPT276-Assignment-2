@@ -40,6 +40,10 @@ public class GameManager implements Iterable<Game> {
         this.allGames.add(newGame);
     }
 
+    public void replaceGame(int gameIndex, Game editedGame) {
+        this.allGames.set(gameIndex, editedGame);
+    }
+
     /**
      * Delete a game from the array.
      * @param indexToDelete array index of the game to be deleted
