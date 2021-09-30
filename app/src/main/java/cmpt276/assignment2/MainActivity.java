@@ -7,14 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         floatingActionBtn();
 
         showGameList();
+
+        registerGameClick();
     }
 
     void floatingActionBtn () {
@@ -45,14 +47,14 @@ public class MainActivity extends AppCompatActivity {
 
                 //launch the new game activity
                 //Intent launchNewGame = new Intent(MainActivity.this, AddGameActivity.class);
-                Intent launchNewGame = AddGameActivity.makeIntent(MainActivity.this);
+                Intent launchNewGame = GameActivity.makeIntent(MainActivity.this);
                 startActivity(launchNewGame);
             }
         });
     }
 
     void showGameList() {
-        GameManager test = new GameManager();
+        GameManager test = GameManager.getInstance();
         Game testGame = new Game();
         testGame.addPlayer(new PlayerScore(1, 3,5,6));
         testGame.addPlayer(new PlayerScore(2, 3,5,6));
@@ -69,6 +71,25 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.gameListView);
         ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, toString);
         listView.setAdapter(adapter);
+    }
+
+    /*
+    Code taken from Brian Fraser's Basic ListView Demo
+     */
+    //TODO: make it so tapping on the item opens a view with the game details instead of showing a toast.
+    private void registerGameClick() {
+        ListView listView = (ListView) findViewById(R.id.gameListView);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+                TextView textView = (TextView) viewClicked;
+                GameManager gameList = GameManager.getInstance();
+                int playerNumber = gameList.getGameAt(position).getPlayerCount();
+                String message = "You clicked game #" + position + "which had " + playerNumber + " players";
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
 }

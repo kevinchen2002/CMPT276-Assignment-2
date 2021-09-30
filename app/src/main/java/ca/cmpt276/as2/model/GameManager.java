@@ -12,6 +12,22 @@ import java.util.Iterator;
 public class GameManager implements Iterable<Game> {
     private final ArrayList<Game> allGames = new ArrayList<>();
 
+    /*
+    Singleton Support
+    Taken from Brian Fraser's Singleton Model video
+     */
+    private static GameManager instance;
+    private GameManager(){
+
+    };
+    public static GameManager getInstance() {
+        if (instance == null) {
+            instance = new GameManager();
+        }
+        return instance;
+    }
+
+
     public ArrayList<Game> getAllGames() {
         return allGames;
     }
@@ -46,7 +62,7 @@ public class GameManager implements Iterable<Game> {
      * @return Game object at the index in the ArrayList
      */
     public Game getGameAt(int indexToGet) {
-        return this.allGames.remove(indexToGet);
+        return this.allGames.get(indexToGet);
     }
 
     /**
