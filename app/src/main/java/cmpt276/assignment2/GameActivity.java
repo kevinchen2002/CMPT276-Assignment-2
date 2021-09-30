@@ -26,6 +26,10 @@ public class GameActivity extends AppCompatActivity {
 
         endActivityButton();
 
+        Intent intent = getIntent();
+        int p1NumCards = intent.getIntExtra("p1NumCards", 0);
+
+
     }
 
     private void endActivityButton() {

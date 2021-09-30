@@ -1,5 +1,6 @@
 package cmpt276.assignment2;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import ca.cmpt276.as2.model.*;
 
@@ -61,11 +62,11 @@ public class MainActivity extends AppCompatActivity {
         testGame.addPlayer(new PlayerScore(2, 3,5,6));
 
         Game testGame2 = new Game();
-        testGame2.addPlayer(new PlayerScore(1, 3,5,6));
-        testGame2.addPlayer(new PlayerScore(2, 3,5,6));
+        testGame2.addPlayer(new PlayerScore(1, 20,5,6));
+        testGame2.addPlayer(new PlayerScore(2, 30,5,6));
 
-//        test.addGame(testGame);
-//        test.addGame(testGame2);
+        test.addGame(testGame);
+        test.addGame(testGame2);
 
         List<String> toString = test.getAllGames().stream().map(Game::toString).collect(Collectors.toList());
 
@@ -75,11 +76,9 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-
-
     /*
-    Code taken from Brian Fraser's Basic ListView Demo
-     */
+        Code taken from Brian Fraser's Basic ListView Demo
+         */
     //TODO: make it so tapping on the item opens a view with the game details instead of showing a toast.
     private void registerGameClick() {
         ListView listView = (ListView) findViewById(R.id.gameListView);
@@ -88,9 +87,21 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
                 TextView textView = (TextView) viewClicked;
                 GameManager gameList = GameManager.getInstance();
-                int playerNumber = gameList.getGameAt(position).getPlayerCount();
+                Game clickedGame = gameList.getGameAt(position);
+                int playerNumber = clickedGame.getPlayerCount();
                 String message = "You clicked game #" + position + "which had " + playerNumber + " players";
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                intent.putExtra("gamePosition", position);
+                intent.putExtra("p1NumCards", clickedGame.getPlayers(0).getCardPlayed());
+                intent.putExtra("p2NumCards", clickedGame.getPlayers(1).getCardPlayed());
+                intent.putExtra("p1Sum", clickedGame.getPlayers(0).getSumOfCards());
+                intent.putExtra("p2Sum", clickedGame.getPlayers(1).getSumOfCards());
+                intent.putExtra("p1Wagers", clickedGame.getPlayers(0).getNumOfWagers());
+                intent.putExtra("p2Wagers", clickedGame.getPlayers(1).getNumOfWagers());
+
+                startActivity(intent);
             }
         });
 

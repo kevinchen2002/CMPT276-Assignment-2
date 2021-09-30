@@ -26,6 +26,9 @@ public class Game {
         this.calculateWinner();
     }
 
+    public PlayerScore getPlayers(int index) {
+        return players.get(index);
+    }
 
     public int getScoresAt(int index) {
         return this.players.get(index).getScore();

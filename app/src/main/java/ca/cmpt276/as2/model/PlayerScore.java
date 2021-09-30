@@ -72,5 +72,15 @@ public class PlayerScore {
         return playerNumber;
     }
 
+    public int getCardPlayed() {
+        return cardPlayed;
+    }
 
+    public int getSumOfCards() {
+        return sumOfCards;
+    }
+
+    public int getNumOfWagers() {
+        return numOfWagers;
+    }
 }
