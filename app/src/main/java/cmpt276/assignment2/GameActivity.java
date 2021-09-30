@@ -49,10 +49,26 @@ public class GameActivity extends AppCompatActivity {
             String p2Input = p2TextEntry.getText().toString();
             int p2NumCards = Integer.parseInt(p2Input);
 
+            p1TextEntry = (EditText) findViewById(R.id.p1Sum);
+            p1Input = p1TextEntry.getText().toString();
+            int p1Sum = Integer.parseInt(p1Input);
+
+            p2TextEntry = (EditText) findViewById(R.id.p2Sum);
+            p2Input = p2TextEntry.getText().toString();
+            int p2Sum = Integer.parseInt(p2Input);
+
+            p1TextEntry = (EditText) findViewById(R.id.p1Wagers);
+            p1Input = p1TextEntry.getText().toString();
+            int p1Wagers = Integer.parseInt(p1Input);
+
+            p2TextEntry = (EditText) findViewById(R.id.p2Wagers);
+            p2Input = p2TextEntry.getText().toString();
+            int p2Wagers = Integer.parseInt(p2Input);
+
             GameManager test = GameManager.getInstance();
             Game testGame = new Game();
-            testGame.addPlayer(new PlayerScore(1, 3,5,6));
-            testGame.addPlayer(new PlayerScore(2, 3,5,6));
+            testGame.addPlayer(new PlayerScore(1, p1NumCards, p1Sum, p1Wagers));
+            testGame.addPlayer(new PlayerScore(2, p2NumCards, p2Sum, p2Wagers));
             test.addGame(testGame);
 
             Log.i("DemoInitialApp", "Player 1: " + p1NumCards);
