@@ -26,13 +26,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setTitle("Games Played");
 
+        getSupportActionBar().setTitle("Games Played");
         floatingActionBtn();
 
-        showGameList();
-
         registerGameClick();
+
+        showGameList();
     }
 
     void floatingActionBtn () {
@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
                 //Intent launchNewGame = new Intent(MainActivity.this, AddGameActivity.class);
                 Intent launchNewGame = GameActivity.makeIntent(MainActivity.this);
                 startActivity(launchNewGame);
-
             }
         });
     }
@@ -64,9 +63,6 @@ public class MainActivity extends AppCompatActivity {
         Game testGame2 = new Game();
         testGame2.addPlayer(new PlayerScore(1, 20,5,6));
         testGame2.addPlayer(new PlayerScore(2, 30,5,6));
-
-        test.addGame(testGame);
-        test.addGame(testGame2);
 
         List<String> toString = test.getAllGames().stream().map(Game::toString).collect(Collectors.toList());
 
