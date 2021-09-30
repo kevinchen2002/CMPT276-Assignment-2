@@ -14,6 +14,8 @@ public class AddGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_game);
+        getSupportActionBar().setTitle("Add New Game");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         endActivityButton();
     }
