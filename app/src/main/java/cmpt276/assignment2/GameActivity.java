@@ -24,11 +24,34 @@ public class GameActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Add New Game");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        endActivityButton();
-
         Intent intent = getIntent();
+        int gameIndex = intent.getIntExtra("gamePosition", -1);
         int p1NumCards = intent.getIntExtra("p1NumCards", 0);
+        int p2NumCards = intent.getIntExtra("p2NumCards", 0);
+        int p1Sum = intent.getIntExtra("p1Sum", 0);
+        int p2Sum = intent.getIntExtra("p2Sum", 0);
+        int p1Wagers = intent.getIntExtra("p1Wagers", 0);
+        int p2Wagers = intent.getIntExtra("p2Wagers", 0);
 
+        EditText p1TextEntry = (EditText) findViewById(R.id.p1NumCards);
+        p1TextEntry.setText(""+p1NumCards);
+        p1TextEntry = (EditText) findViewById(R.id.p1Sum);
+        p1TextEntry.setText(""+p1Sum);
+        p1TextEntry = (EditText) findViewById(R.id.p1Wagers);
+        p1TextEntry.setText(""+p1Wagers);
+
+        EditText p2TextEntry = (EditText) findViewById(R.id.p2NumCards);
+        p2TextEntry.setText(""+p2NumCards);
+        p2TextEntry = (EditText) findViewById(R.id.p2Sum);
+        p2TextEntry.setText(""+p2Sum);
+        p2TextEntry = (EditText) findViewById(R.id.p2Wagers);
+        p2TextEntry.setText(""+p2Wagers);
+
+        if (gameIndex != -1) {
+            getSupportActionBar().setTitle("Edit Game");
+        }
+
+        endActivityButton();
 
     }
 
