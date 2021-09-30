@@ -1,11 +1,13 @@
 package cmpt276.assignment2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,26 +36,13 @@ public class GameActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int gameIndex = intent.getIntExtra("gamePosition", -1);
-        int p1NumCards = intent.getIntExtra("p1NumCards", 0);
-        int p2NumCards = intent.getIntExtra("p2NumCards", 0);
-        int p1Sum = intent.getIntExtra("p1Sum", 0);
-        int p2Sum = intent.getIntExtra("p2Sum", 0);
-        int p1Wagers = intent.getIntExtra("p1Wagers", 0);
-        int p2Wagers = intent.getIntExtra("p2Wagers", 0);
 
-        EditText p1TextEntry = (EditText) findViewById(R.id.p1NumCards);
-        p1TextEntry.setText(""+p1NumCards);
-        p1TextEntry = (EditText) findViewById(R.id.p1Sum);
-        p1TextEntry.setText(""+p1Sum);
-        p1TextEntry = (EditText) findViewById(R.id.p1Wagers);
-        p1TextEntry.setText(""+p1Wagers);
-
-        EditText p2TextEntry = (EditText) findViewById(R.id.p2NumCards);
-        p2TextEntry.setText(""+p2NumCards);
-        p2TextEntry = (EditText) findViewById(R.id.p2Sum);
-        p2TextEntry.setText(""+p2Sum);
-        p2TextEntry = (EditText) findViewById(R.id.p2Wagers);
-        p2TextEntry.setText(""+p2Wagers);
+        setDefaultValue(intent.getIntExtra("p1NumCards", 0), R.id.p1NumCards);
+        setDefaultValue(intent.getIntExtra("p2NumCards", 0), R.id.p2NumCards);
+        setDefaultValue(intent.getIntExtra("p1Sum", 0), R.id.p1Sum);
+        setDefaultValue(intent.getIntExtra("p2Sum", 0), R.id.p2Sum);
+        setDefaultValue(intent.getIntExtra("p1Wagers", 0), R.id.p1Wagers);
+        setDefaultValue(intent.getIntExtra("p2Wagers", 0), R.id.p2Wagers);
 
         if (gameIndex != -1) {
             getSupportActionBar().setTitle("Edit Game");
@@ -63,43 +52,39 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    private void setDefaultValue(int valueToSet, int id) {
+        EditText dataEntry = (EditText) this.findViewById(id);
+        dataEntry.setText(""+valueToSet);
+    }
+
     private void endActivityButton(int gameIndex) {
         Button btn = (Button) findViewById(R.id.end_add_game);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 enterCards(gameIndex);
-                finish();
+                //finish();
             }
         });
+    }
+
+    private int parseFromTextEntry(int id) throws NumberFormatException{
+
+        EditText textEntry = (EditText) findViewById(id);
+        String input = textEntry.getText().toString();
+        return Integer.parseInt(input);
+
     }
 
     private void enterCards(int gameIndex) {
         try {
 
-            EditText p1TextEntry = (EditText) findViewById(R.id.p1NumCards);
-            String p1Input = p1TextEntry.getText().toString();
-            int p1NumCards = Integer.parseInt(p1Input);
-
-            EditText p2TextEntry = (EditText) findViewById(R.id.p2NumCards);
-            String p2Input = p2TextEntry.getText().toString();
-            int p2NumCards = Integer.parseInt(p2Input);
-
-            p1TextEntry = (EditText) findViewById(R.id.p1Sum);
-            p1Input = p1TextEntry.getText().toString();
-            int p1Sum = Integer.parseInt(p1Input);
-
-            p2TextEntry = (EditText) findViewById(R.id.p2Sum);
-            p2Input = p2TextEntry.getText().toString();
-            int p2Sum = Integer.parseInt(p2Input);
-
-            p1TextEntry = (EditText) findViewById(R.id.p1Wagers);
-            p1Input = p1TextEntry.getText().toString();
-            int p1Wagers = Integer.parseInt(p1Input);
-
-            p2TextEntry = (EditText) findViewById(R.id.p2Wagers);
-            p2Input = p2TextEntry.getText().toString();
-            int p2Wagers = Integer.parseInt(p2Input);
+            int p1NumCards = parseFromTextEntry(R.id.p1NumCards);
+            int p2NumCards = parseFromTextEntry(R.id.p2NumCards);
+            int p1Sum = parseFromTextEntry(R.id.p1Sum);
+            int p2Sum = parseFromTextEntry(R.id.p2Sum);
+            int p1Wagers = parseFromTextEntry(R.id.p1Wagers);
+            int p2Wagers = parseFromTextEntry(R.id.p2Wagers);
 
             GameManager test = GameManager.getInstance();
             Game testGame = new Game(gameCreationDateTime);
@@ -113,12 +98,10 @@ public class GameActivity extends AppCompatActivity {
                 test.replaceGame(gameIndex, testGame);
             }
 
-
             Log.i("DemoInitialApp", "Player 1: " + p1NumCards);
             Log.i("DemoInitialApp", "Player 2: " + p2NumCards);
         }
         catch (NumberFormatException nfe) {
-           //Log.i("uh oh", "bad");
             Toast.makeText(getApplicationContext(), "Invalid input - fill in all fields", Toast.LENGTH_SHORT).show();
         }
 
