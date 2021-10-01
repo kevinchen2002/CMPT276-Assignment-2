@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GameManager implements Iterable<Game> {
-    private final ArrayList<Game> allGames = new ArrayList<>();
+    private ArrayList<Game> allGames = new ArrayList<>();
 
     /*
     Singleton Support
@@ -27,6 +27,9 @@ public class GameManager implements Iterable<Game> {
         return instance;
     }
 
+    public void setAllGames(ArrayList<Game> allGames) {
+        this.allGames = allGames;
+    }
 
     public ArrayList<Game> getAllGames() {
         return allGames;
