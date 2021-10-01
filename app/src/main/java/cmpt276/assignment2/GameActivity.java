@@ -1,24 +1,19 @@
 package cmpt276.assignment2;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -137,7 +132,7 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 FragmentManager manager = getSupportFragmentManager();
-                MessageFragment dialog = new MessageFragment();
+                ConfirmDeleteFragment dialog = new ConfirmDeleteFragment();
                 dialog.show(manager, "MessageDialog");
 
                 Log.i("TAG", "just showed dialog");
@@ -148,14 +143,14 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         FragmentManager manager = getSupportFragmentManager();
-        MessageFragment dialog = new MessageFragment();
+        ConfirmBackFragment dialog = new ConfirmBackFragment();
         dialog.show(manager, "MessageDialog");
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         FragmentManager manager = getSupportFragmentManager();
-        MessageFragment dialog = new MessageFragment();
+        ConfirmBackFragment dialog = new ConfirmBackFragment();
         dialog.show(manager, "MessageDialog");
         return true;
     }

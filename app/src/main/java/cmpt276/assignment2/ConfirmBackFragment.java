@@ -10,7 +10,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-public class MessageFragment extends AppCompatDialogFragment {
+public class ConfirmBackFragment extends AppCompatDialogFragment {
 
     @Override
     public Dialog onCreateDialog( Bundle savedInstanceState) {
