@@ -52,6 +52,7 @@ public class GameActivity extends AppCompatActivity {
         setDefaultValue(intent.getIntExtra("p1Wagers", 0), R.id.p1Wagers);
         setDefaultValue(intent.getIntExtra("p2Wagers", 0), R.id.p2Wagers);
 
+
         if (gameIndex != -1) {
             getSupportActionBar().setTitle("Edit Game");
             previewGameResults();
@@ -69,12 +70,12 @@ public class GameActivity extends AppCompatActivity {
         dataEntry.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                previewGameResults();
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                previewGameResults();
             }
 
             @Override
@@ -87,6 +88,7 @@ public class GameActivity extends AppCompatActivity {
     private void previewGameResults() {
         //FIX: crash due to values being left empty.
         //code that calculates the score
+
         try {
             int p1Score = PlayerScore.calculatePlayerScore(parseFromTextEntry(R.id.p1NumCards),
                     parseFromTextEntry(R.id.p1Sum),
@@ -120,7 +122,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 enterCards(gameIndex);
-                //finish();
+                finish();
             }
         });
     }

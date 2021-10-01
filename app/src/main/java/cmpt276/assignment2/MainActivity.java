@@ -49,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
         showGameList();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        showGameList();
+    }
+
     void floatingActionBtn () {
         //Wire up the button to do stuff
         //get the button
