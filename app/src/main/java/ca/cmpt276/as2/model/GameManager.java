@@ -6,11 +6,33 @@ add new game, retrieve specific game from index, and removing game by index
 
 package ca.cmpt276.as2.model;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class GameManager implements Iterable<Game> {
     private ArrayList<Game> allGames = new ArrayList<>();
+    private final String fileName = "./data.json";
+
+
 
     /*
     Singleton Support
@@ -90,4 +112,5 @@ public class GameManager implements Iterable<Game> {
     public String toString() {
         return "Dummy";
     }
+
 }

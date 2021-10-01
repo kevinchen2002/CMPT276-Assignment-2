@@ -5,6 +5,7 @@ import androidx.core.app.NavUtils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -28,6 +29,7 @@ import ca.cmpt276.as2.model.PlayerScore;
 public class GameActivity extends AppCompatActivity {
 
     private LocalDateTime gameCreationDateTime = LocalDateTime.now();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
