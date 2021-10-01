@@ -54,7 +54,7 @@ public class GameActivity extends AppCompatActivity {
 
         if (gameIndex != -1) {
             getSupportActionBar().setTitle("Edit Game");
-            showGameResults();
+            previewGameResults();
         }
 
         endActivityButton(gameIndex);
@@ -64,6 +64,54 @@ public class GameActivity extends AppCompatActivity {
     private void setDefaultValue(int valueToSet, int id) {
         EditText dataEntry = (EditText) this.findViewById(id);
         dataEntry.setText(""+valueToSet);
+
+
+        dataEntry.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                previewGameResults();
+            }
+        });
+    }
+
+    private void previewGameResults() {
+        //FIX: crash due to values being left empty.
+        //code that calculates the score
+        try {
+            int p1Score = PlayerScore.calculatePlayerScore(parseFromTextEntry(R.id.p1NumCards),
+                    parseFromTextEntry(R.id.p1Sum),
+                    parseFromTextEntry(R.id.p1Wagers));
+            int p2Score = PlayerScore.calculatePlayerScore(parseFromTextEntry(R.id.p2NumCards),
+                    parseFromTextEntry(R.id.p2Sum),
+                    parseFromTextEntry(R.id.p2Wagers));
+
+            TextView p1ScoreText = (TextView) findViewById(R.id.p1Score);
+            p1ScoreText.setText("" + p1Score);
+            TextView p2ScoreText = (TextView) findViewById(R.id.p2Score);
+            p2ScoreText.setText("" + p2Score);
+
+            //show score
+            String winnerMessage = "Game tied";
+            if (p1Score > p2Score) {
+                winnerMessage = "Player 1 won.";
+            } else if (p2Score > p1Score) {
+                winnerMessage = "Player 2 won.";
+            }
+            TextView winnerText = (TextView) findViewById((R.id.winnerText));
+            winnerText.setText(winnerMessage);
+        } catch (NumberFormatException e){
+            //do nothing
+        }
     }
 
     private void endActivityButton(int gameIndex) {
@@ -119,30 +167,5 @@ public class GameActivity extends AppCompatActivity {
         return new Intent(context, GameActivity.class);
     }
 
-    private void showGameResults() {
-        //TODO: Make score update as user puts in values
-        //code that calculates the score
-        int p1Score = PlayerScore.calculatePlayerScore(parseFromTextEntry(R.id.p1NumCards),
-                                                        parseFromTextEntry(R.id.p1Sum),
-                                                        parseFromTextEntry(R.id.p1Wagers));
-        int p2Score = PlayerScore.calculatePlayerScore(parseFromTextEntry(R.id.p2NumCards),
-                                                        parseFromTextEntry(R.id.p2Sum),
-                                                        parseFromTextEntry(R.id.p2Wagers));
-
-        TextView p1ScoreText = (TextView) findViewById(R.id.p1Score);
-        p1ScoreText.setText("" + p1Score);
-        TextView p2ScoreText = (TextView) findViewById(R.id.p2Score);
-        p2ScoreText.setText("" + p2Score);
-
-        //show score
-        String winnerMessage = "Game tied";
-        if (p1Score > p2Score) {
-            winnerMessage = "Player 1 won.";
-        } else if  (p2Score > p1Score) {
-            winnerMessage = "Player 2 won.";
-        }
-        TextView winnerText = (TextView) findViewById((R.id.winnerText));
-        winnerText.setText(winnerMessage);
-    }
 
 }

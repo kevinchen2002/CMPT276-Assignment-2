@@ -42,7 +42,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
         android:text="@string/number_of_cards"
         app:layout_constraintBottom_toBottomOf="@+id/p1NumCards"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -54,14 +53,10 @@
         android:id="@+id/winnerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="172dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/p1Wagers"
-        app:layout_constraintVertical_bias="0.671" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/dateCreateText"
+        app:layout_constraintStart_toStartOf="@+id/dateCreateText"
+        app:layout_constraintTop_toBottomOf="@+id/dateCreateText" />
 
     <EditText
         android:id="@+id/p2Wagers"
@@ -113,7 +108,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginEnd="8dp"
         android:text="@string/number_of_wagers"
         app:layout_constraintBottom_toBottomOf="@+id/p1Wagers"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -126,7 +120,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
         android:text="@string/sum_of_points"
         app:layout_constraintBottom_toBottomOf="@+id/p1Sum"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -203,6 +196,7 @@
         android:layout_marginTop="76dp"
         android:text="@string/player_2"
         app:layout_constraintEnd_toEndOf="@+id/p2NumCards"
+        app:layout_constraintHorizontal_bias="0.423"
         app:layout_constraintStart_toStartOf="@+id/p2NumCards"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -210,10 +204,10 @@
         android:id="@+id/dateCreateText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:text="@string/textview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="@+id/p2Title"
+        app:layout_constraintStart_toStartOf="@+id/p1Title"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -231,7 +225,9 @@
         android:text="@string/created_on"
         app:layout_constraintBottom_toBottomOf="@+id/dateCreateText"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.606"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dateCreateText" />
+        app:layout_constraintTop_toTopOf="@+id/dateCreateText"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
