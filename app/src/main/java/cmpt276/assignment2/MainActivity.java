@@ -1,6 +1,8 @@
 package cmpt276.assignment2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Group;
+
 import ca.cmpt276.as2.model.*;
 
 import android.content.Context;
@@ -11,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,6 +39,19 @@ public class MainActivity extends AppCompatActivity {
     private GameManager gameManager = GameManager.getInstance();
 
     SharedPreferences sp;
+
+    @Override
+    public void onContentChanged() {
+        super.onContentChanged();
+
+//        TextView emptyGamesMessage = findViewById(R.id.emptyGameMessage);
+//        ImageView pointingArrow = findViewById(R.id.helperArrow);
+        ListView gameList = findViewById(R.id.gameListView);
+        Group noGames = findViewById(R.id.noGamesGroup);
+
+        gameList.setEmptyView(noGames);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
