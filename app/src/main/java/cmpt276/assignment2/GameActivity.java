@@ -6,6 +6,8 @@ import androidx.core.app.NavUtils;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +16,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import ca.cmpt276.as2.model.Game;
 import ca.cmpt276.as2.model.GameManager;
@@ -31,8 +36,11 @@ public class GameActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Add New Game");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //TODO: find a way to reduce redundancy in the formatter
         TextView dateCreateText = (TextView) findViewById(R.id.dateCreateText);
-        dateCreateText.setText(gameCreationDateTime.toString());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDatetime = gameCreationDateTime.format(formatter);
+        dateCreateText.setText(formattedDatetime);
 
         Intent intent = getIntent();
         int gameIndex = intent.getIntExtra("gamePosition", -1);
@@ -46,6 +54,26 @@ public class GameActivity extends AppCompatActivity {
 
         if (gameIndex != -1) {
             getSupportActionBar().setTitle("Edit Game");
+
+            //TODO: Make score update as user puts in values
+            //code that calculates the score
+            int p1Score = PlayerScore.calculatePlayerScore(p1NumCards, p1Sum, p1Wagers);
+            int p2Score = PlayerScore.calculatePlayerScore(p2NumCards, p2Sum, p2Wagers);
+            TextView p1ScoreText = (TextView) findViewById(R.id.p1Score);
+            p1ScoreText.setText("" + p1Score);
+            TextView p2ScoreText = (TextView) findViewById(R.id.p2Score);
+            p2ScoreText.setText("" + p2Score);
+
+            //show score
+            String winnerMessage = "Game tied";
+            if (p1Score > p2Score) {
+                winnerMessage = "Player 1 won.";
+            } else if  (p2Score > p1Score) {
+                winnerMessage = "Player 2 won.";
+            }
+            TextView winnerText = (TextView) findViewById((R.id.winnerText));
+            winnerText.setText(winnerMessage);
+
         }
 
         endActivityButton(gameIndex);
@@ -110,4 +138,6 @@ public class GameActivity extends AppCompatActivity {
     public static Intent makeIntent(Context context) {
         return new Intent(context, GameActivity.class);
     }
+
+
 }

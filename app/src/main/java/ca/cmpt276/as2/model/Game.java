@@ -86,17 +86,6 @@ public class Game {
     @NonNull
     @Override
     public String toString() {
-//        //return "Game{" +
-////                "players=" + players +
-////                ", winners=" + winners +
-////                ", creationDateTime=" + creationDateTime +
-////                '}';
-//        String gameString = "";
-//        gameString += creationDateTime.toString();
-//        gameString += " - Player " + winners + "won: ";
-//        gameString += "Insert scores here?";
-//        return gameString;
-
         //print all the player's scores
         StringBuilder gameDetails = new StringBuilder();
 

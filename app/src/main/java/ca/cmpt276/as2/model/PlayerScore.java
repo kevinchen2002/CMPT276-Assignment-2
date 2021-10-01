@@ -64,6 +64,18 @@ public class PlayerScore {
         return score;
     }
 
+    public static int calculatePlayerScore(int cardPlayed, int sumOfCards, int numOfWagers) {
+        if (cardPlayed == 0) {
+            return 0;
+        }
+        int score = sumOfCards - SUM_CARD_OFFSET;
+        score *= (numOfWagers + WAGER_MULTIPLIER_OFFSET);
+        if (cardPlayed >= THRESHOLD_FOR_BONUS) {
+            score += SUM_CARD_OFFSET;
+        }
+        return score;
+    }
+
     /**
      * Returns a player's number in a Game
      * @return int value from 1 - 4
