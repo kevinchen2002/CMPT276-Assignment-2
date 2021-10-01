@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/SFU/200 level courses/CMPT 276/Assignments/Assignment 2/a2/app/src/main/res/drawable/ic_baseline_warning_24.xml" value="0.23378378378378378" />
+        <entry key="..\:/SFU/200 level courses/CMPT 276/Assignments/Assignment 2/a2/app/src/main/res/layout/activity_game.xml" value="0.20742753623188406" />
+        <entry key="..\:/SFU/200 level courses/CMPT 276/Assignments/Assignment 2/a2/app/src/main/res/layout/activity_main.xml" value="0.20742753623188406" />
+        <entry key="..\:/SFU/200 level courses/CMPT 276/Assignments/Assignment 2/a2/app/src/main/res/layout/confirm_prompt.xml" value="0.264" />
         <entry key="..\:/Users/Joshu/Documents/University/Fall2021/CMPT276/cmpt276-assignment-2/app/src/main/res/layout/activity_game.xml" value="0.335" />
         <entry key="..\:/Users/Joshu/Documents/University/Fall2021/CMPT276/cmpt276-assignment-2/app/src/main/res/layout/activity_main.xml" value="0.25" />
       </map>
