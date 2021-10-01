@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/noGamesGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="noGameMessage,noGameImage,arrowToNewGame,arrowLabel"
+        tools:layout_editor_absoluteX="200dp"
+        tools:layout_editor_absoluteY="75dp" />
+
     <ListView
         android:id="@+id/gameListView"
         android:layout_width="0dp"
@@ -16,10 +24,22 @@
         android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
     </ListView>
+
+    <TextView
+        android:id="@+id/bonusFeatures"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/bonus_features_added"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAddNewGame"
@@ -33,5 +53,43 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_add_24"
         tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+
+    <TextView
+        android:id="@+id/noGameMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_games_found"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/noGameImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/noGameMessage"
+        app:layout_constraintEnd_toEndOf="@+id/noGameMessage"
+        app:layout_constraintStart_toStartOf="@+id/noGameMessage"
+        app:srcCompat="@drawable/woman_shrugging"
+        android:contentDescription="@string/woman_description" />
+
+    <ImageView
+        android:id="@+id/arrowToNewGame"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddNewGame"
+        app:layout_constraintEnd_toStartOf="@+id/btnAddNewGame"
+        app:srcCompat="@drawable/ic_baseline_south_east_24"
+        android:contentDescription="@string/arrow_description" />
+
+    <TextView
+        android:id="@+id/arrowLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tap_to_add_a_game"
+        app:layout_constraintBottom_toTopOf="@+id/arrowToNewGame"
+        app:layout_constraintEnd_toEndOf="@+id/arrowToNewGame"
+        app:layout_constraintStart_toStartOf="@+id/arrowToNewGame" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

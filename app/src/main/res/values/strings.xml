@@ -14,4 +14,9 @@
     <string name="empty_list_view">No Games Added!</string>
     <string name="arrow_pointing_at_add_new_game">Arrow pointing at Add New Game</string>
     <string name="helper_arrow_message">Tap the button to add a new game!</string>
+    <string name="no_games_found">No Games Found.</string>
+    <string name="tap_to_add_a_game">Tap to add a game!</string>
+    <string name="arrow_description">Arrow pointing to add a game.</string>
+    <string name="woman_description">Woman shrugging to indicate there are no games.</string>
+    <string name="bonus_features_added">Optional Features\n5. Empty State</string>
 </resources>
