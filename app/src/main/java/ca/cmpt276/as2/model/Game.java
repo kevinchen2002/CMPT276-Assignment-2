@@ -118,7 +118,7 @@ public class Game {
         //code learned from https://mkyong.com/java8/java-8-how-to-format-localdatetime/
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDatetime = this.getCreationDateTime().format(formatter);
-        gameDetails.append(" (").append(formattedDatetime).append(")\n");
+        gameDetails.append("\n (").append(formattedDatetime).append(")\n");
 
         return gameDetails.toString();
     }

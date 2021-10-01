@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "Thia is a magic log message");
-                Toast.makeText(getApplicationContext(), "Stuff has been done", Toast.LENGTH_SHORT).show();
 
                 //launch the new game activity
                 //Intent launchNewGame = new Intent(MainActivity.this, AddGameActivity.class);
@@ -81,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         List<String> toString = test.getAllGames().stream().map(Game::toString).collect(Collectors.toList());
 
         ListView listView = (ListView) findViewById(R.id.gameListView);
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, toString);
+        ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, toString);
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
     }
@@ -99,8 +98,6 @@ public class MainActivity extends AppCompatActivity {
                 GameManager gameList = GameManager.getInstance();
                 Game clickedGame = gameList.getGameAt(position);
                 int playerNumber = clickedGame.getPlayerCount();
-                String message = "You clicked game #" + position + "which had " + playerNumber + " players";
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(MainActivity.this, GameActivity.class);
                 intent.putExtra("gamePosition", position);

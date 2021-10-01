@@ -6,201 +6,232 @@
     android:layout_height="match_parent"
     tools:context=".GameActivity">
 
-    <EditText
-        android:id="@+id/p1Wagers"
-        android:layout_width="103dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="48dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toStartOf="@+id/p2Sum"
-        app:layout_constraintHorizontal_bias="0.433"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/p1Sum"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/numWagersLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="72dp"
-        android:text="Number of Wagers"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sumPointsLabel" />
-
-    <EditText
-        android:id="@+id/p2Wagers"
-        android:layout_width="103dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/p1Wagers"
-        app:layout_constraintTop_toBottomOf="@+id/p2Sum"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <EditText
-        android:id="@+id/p2Sum"
-        android:layout_width="103dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
-        app:layout_constraintStart_toEndOf="@+id/p1NumCards"
-        app:layout_constraintTop_toBottomOf="@+id/p2NumCards"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/sumPointsLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="76dp"
-        android:text="Sum of Points"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numCardsLabel" />
-
-    <EditText
-        android:id="@+id/p1Sum"
-        android:layout_width="103dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="44dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toStartOf="@+id/p2Sum"
-        app:layout_constraintHorizontal_bias="0.433"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/p1NumCards"
-        tools:ignore="SpeakableTextPresentCheck" />
-
     <Button
         android:id="@+id/end_add_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="492dp"
         android:layout_marginEnd="16dp"
-        android:text="Save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginBottom="16dp"
+        android:text="@string/save_label"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/p1Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="72dp"
-        android:text="Player 1"
-        app:layout_constraintEnd_toStartOf="@+id/p2Title"
+        android:layout_marginTop="76dp"
+        android:text="@string/player_1_label"
+        app:layout_constraintEnd_toEndOf="@+id/p1NumCards"
+        app:layout_constraintStart_toStartOf="@+id/p1NumCards"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/p2Title"
+        android:id="@+id/p1Score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="64dp"
-        android:text="Player 2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/p2Score"
+        app:layout_constraintEnd_toEndOf="@+id/p1Wagers"
+        app:layout_constraintStart_toStartOf="@+id/p1Wagers"
+        app:layout_constraintTop_toBottomOf="@+id/p1Wagers" />
 
     <TextView
         android:id="@+id/numCardsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        android:text="Number of Cards"
+        android:layout_marginEnd="8dp"
+        android:text="@string/number_of_cards"
+        app:layout_constraintBottom_toBottomOf="@+id/p1NumCards"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/p1Title" />
+        app:layout_constraintTop_toTopOf="@+id/p1NumCards"
+        app:layout_constraintVertical_bias="0.482" />
+
+    <TextView
+        android:id="@+id/winnerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="172dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/p1Wagers"
+        app:layout_constraintVertical_bias="0.671" />
+
+    <EditText
+        android:id="@+id/p2Wagers"
+        android:layout_width="103dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/p1Wagers"
+        app:layout_constraintEnd_toEndOf="@+id/p2Sum"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/p2Sum"
+        app:layout_constraintTop_toBottomOf="@+id/p2Sum"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="LabelFor,SpeakableTextPresentCheck"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/p1NumCards"
         android:layout_width="103dp"
         android:layout_height="48dp"
         android:layout_marginTop="28dp"
+        android:layout_marginEnd="24dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/p2NumCards"
         app:layout_constraintTop_toBottomOf="@+id/p1Title"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="LabelFor,SpeakableTextPresentCheck"
+        android:importantForAutofill="no"/>
+
+    <EditText
+        android:id="@+id/p2Sum"
+        android:layout_width="103dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/p1Sum"
+        app:layout_constraintEnd_toEndOf="@+id/p2NumCards"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/p2NumCards"
+        app:layout_constraintTop_toBottomOf="@+id/p2NumCards"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="LabelFor,SpeakableTextPresentCheck"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/numWagersLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/number_of_wagers"
+        app:layout_constraintBottom_toBottomOf="@+id/p1Wagers"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/p1Wagers"
+        app:layout_constraintVertical_bias="0.482" />
+
+    <TextView
+        android:id="@+id/sumPointsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/sum_of_points"
+        app:layout_constraintBottom_toBottomOf="@+id/p1Sum"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/p1Sum"
+        app:layout_constraintVertical_bias="0.482" />
 
     <EditText
         android:id="@+id/p2NumCards"
         android:layout_width="103dp"
         android:layout_height="48dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:ems="10"
         android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/p1NumCards"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/p1NumCards"
         app:layout_constraintTop_toBottomOf="@+id/p2Title"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="LabelFor,SpeakableTextPresentCheck"
+        android:importantForAutofill="no" />
 
     <TextView
-        android:id="@+id/dateCreateText"
+        android:id="@+id/p2Score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="32dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/p2Wagers"
+        app:layout_constraintStart_toStartOf="@+id/p2Wagers"
+        app:layout_constraintTop_toBottomOf="@+id/p2Wagers" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="44dp"
-        android:text="Score"
+        android:text="@string/score"
+        app:layout_constraintBottom_toBottomOf="@+id/p1Score"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numWagersLabel" />
+        app:layout_constraintTop_toTopOf="@+id/p1Score"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/p1Wagers"
+        android:layout_width="103dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/p1Sum"
+        app:layout_constraintStart_toStartOf="@+id/p1Sum"
+        app:layout_constraintTop_toBottomOf="@+id/p1Sum"
+        tools:ignore="LabelFor,SpeakableTextPresentCheck"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/p1Sum"
+        android:layout_width="103dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/p1NumCards"
+        app:layout_constraintStart_toStartOf="@+id/p1NumCards"
+        app:layout_constraintTop_toBottomOf="@+id/p1NumCards"
+        tools:ignore="LabelFor,SpeakableTextPresentCheck"
+        android:importantForAutofill="no" />
 
     <TextView
-        android:id="@+id/p1Score"
+        android:id="@+id/p2Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="28dp"
-        android:text="12"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/p1Wagers" />
+        android:layout_marginTop="76dp"
+        android:text="@string/player_2"
+        app:layout_constraintEnd_toEndOf="@+id/p2NumCards"
+        app:layout_constraintStart_toStartOf="@+id/p2NumCards"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/p2Score"
+        android:id="@+id/dateCreateText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:layout_marginEnd="80dp"
-        android:text="12"
-        android:textSize="20sp"
+        android:text="@string/textview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/p2Wagers" />
-
-    <TextView
-        android:id="@+id/winnerText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="180dp"
-        android:text="winner"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/p2Score"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/p1Score" />
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="131dp" />
+        app:layout_constraintGuide_percent="0.35" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/created_on"
+        app:layout_constraintBottom_toBottomOf="@+id/dateCreateText"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/dateCreateText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="add_game">Add Game</string>
+    <string name="player_1_label">Player 1</string>
+    <string name="save_label">Save</string>
+    <string name="number_of_cards">Number of Cards</string>
+    <string name="winner">winner</string>
+    <string name="number_of_wagers">Number of Wagers</string>
+    <string name="sum_of_points">Sum of Points</string>
+    <string name="score">Score</string>
+    <string name="player_2">Player 2</string>
+    <string name="textview">TextView</string>
+    <string name="created_on">Created On</string>
+    <string name="number_of_wagers_for_player_2">Number of wagers for player 2</string>
 </resources>
