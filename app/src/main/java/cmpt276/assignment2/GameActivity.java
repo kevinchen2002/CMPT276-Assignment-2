@@ -54,26 +54,7 @@ public class GameActivity extends AppCompatActivity {
 
         if (gameIndex != -1) {
             getSupportActionBar().setTitle("Edit Game");
-
-            //TODO: Make score update as user puts in values
-            //code that calculates the score
-            int p1Score = PlayerScore.calculatePlayerScore(p1NumCards, p1Sum, p1Wagers);
-            int p2Score = PlayerScore.calculatePlayerScore(p2NumCards, p2Sum, p2Wagers);
-            TextView p1ScoreText = (TextView) findViewById(R.id.p1Score);
-            p1ScoreText.setText("" + p1Score);
-            TextView p2ScoreText = (TextView) findViewById(R.id.p2Score);
-            p2ScoreText.setText("" + p2Score);
-
-            //show score
-            String winnerMessage = "Game tied";
-            if (p1Score > p2Score) {
-                winnerMessage = "Player 1 won.";
-            } else if  (p2Score > p1Score) {
-                winnerMessage = "Player 2 won.";
-            }
-            TextView winnerText = (TextView) findViewById((R.id.winnerText));
-            winnerText.setText(winnerMessage);
-
+            showGameResults();
         }
 
         endActivityButton(gameIndex);
@@ -97,7 +78,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private int parseFromTextEntry(int id) throws NumberFormatException{
-
         EditText textEntry = (EditText) findViewById(id);
         String input = textEntry.getText().toString();
         return Integer.parseInt(input);
@@ -116,8 +96,8 @@ public class GameActivity extends AppCompatActivity {
 
             GameManager test = GameManager.getInstance();
             Game testGame = new Game(gameCreationDateTime);
-            testGame.addPlayer(new PlayerScore(1, p1NumCards, p1Sum, p1Wagers));
-            testGame.addPlayer(new PlayerScore(2, p2NumCards, p2Sum, p2Wagers));
+            testGame.addPlayer(new PlayerScore(0, p1NumCards, p1Sum, p1Wagers));
+            testGame.addPlayer(new PlayerScore(1, p2NumCards, p2Sum, p2Wagers));
 
             if (gameIndex == -1) {
                 test.addGame(testGame);
@@ -139,5 +119,30 @@ public class GameActivity extends AppCompatActivity {
         return new Intent(context, GameActivity.class);
     }
 
+    private void showGameResults() {
+        //TODO: Make score update as user puts in values
+        //code that calculates the score
+        int p1Score = PlayerScore.calculatePlayerScore(parseFromTextEntry(R.id.p1NumCards),
+                                                        parseFromTextEntry(R.id.p1Sum),
+                                                        parseFromTextEntry(R.id.p1Wagers));
+        int p2Score = PlayerScore.calculatePlayerScore(parseFromTextEntry(R.id.p2NumCards),
+                                                        parseFromTextEntry(R.id.p2Sum),
+                                                        parseFromTextEntry(R.id.p2Wagers));
+
+        TextView p1ScoreText = (TextView) findViewById(R.id.p1Score);
+        p1ScoreText.setText("" + p1Score);
+        TextView p2ScoreText = (TextView) findViewById(R.id.p2Score);
+        p2ScoreText.setText("" + p2Score);
+
+        //show score
+        String winnerMessage = "Game tied";
+        if (p1Score > p2Score) {
+            winnerMessage = "Player 1 won.";
+        } else if  (p2Score > p1Score) {
+            winnerMessage = "Player 2 won.";
+        }
+        TextView winnerText = (TextView) findViewById((R.id.winnerText));
+        winnerText.setText(winnerMessage);
+    }
 
 }
