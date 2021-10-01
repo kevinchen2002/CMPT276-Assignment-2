@@ -11,5 +11,7 @@
     <string name="player_2">Player 2</string>
     <string name="textview">TextView</string>
     <string name="created_on">Created On</string>
-    <string name="number_of_wagers_for_player_2">Number of wagers for player 2</string>
+    <string name="empty_list_view">No Games Added!</string>
+    <string name="arrow_pointing_at_add_new_game">Arrow pointing at Add New Game</string>
+    <string name="helper_arrow_message">Tap the button to add a new game!</string>
 </resources>

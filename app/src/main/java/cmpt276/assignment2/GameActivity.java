@@ -96,11 +96,11 @@ public class GameActivity extends AppCompatActivity {
             int p2Score = PlayerScore.calculatePlayerScore(parseFromTextEntry(R.id.p2NumCards),
                     parseFromTextEntry(R.id.p2Sum),
                     parseFromTextEntry(R.id.p2Wagers));
-
             TextView p1ScoreText = (TextView) findViewById(R.id.p1Score);
             p1ScoreText.setText("" + p1Score);
             TextView p2ScoreText = (TextView) findViewById(R.id.p2Score);
             p2ScoreText.setText("" + p2Score);
+
 
             //show score
             String winnerMessage = "Game tied";
