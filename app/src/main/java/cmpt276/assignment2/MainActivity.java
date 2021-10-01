@@ -15,12 +15,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "DemoInitialApp";
+    private final String fileName = "data.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,5 +116,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    void createFile() {
+        try {
+            File foodStorage = new File(fileName);
+            if (foodStorage.createNewFile()) {
+                System.out.println("File data.json created!");
+            }
+        } catch (IOException e) {
+            System.out.println("Error while creating file");
+            e.printStackTrace();
+        }
+    }
+
+    //PLACE LOADFILE AND WRITEFILE HERE LATER
 
 }
