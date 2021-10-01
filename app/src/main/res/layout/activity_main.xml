@@ -90,6 +90,7 @@
         android:text="@string/tap_to_add_a_game"
         app:layout_constraintBottom_toTopOf="@+id/arrowToNewGame"
         app:layout_constraintEnd_toEndOf="@+id/arrowToNewGame"
+        app:layout_constraintHorizontal_bias="0.98"
         app:layout_constraintStart_toStartOf="@+id/arrowToNewGame" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
