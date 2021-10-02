@@ -1,5 +1,6 @@
 package cmpt276.assignment2;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 
@@ -61,6 +62,12 @@ public class GameActivity extends AppCompatActivity {
         }
 
         endActivityButton(gameIndex);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
     }
 

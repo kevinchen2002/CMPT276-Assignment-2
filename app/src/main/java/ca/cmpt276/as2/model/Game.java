@@ -75,6 +75,31 @@ public class Game {
         return winners.size();
     }
 
+    public String getPoints() {
+        StringBuilder gameDetails = new StringBuilder();
+        for (int i = 0; i < this.getPlayerCount(); i++) {
+            gameDetails.append(this.getScoresAt(i));
+            //only prints vs. between games and not at the end
+            if (!(i ==(this.getPlayerCount() - 1))) {
+                gameDetails.append(" vs. ");
+            }
+        }
+
+        return  gameDetails.toString();
+    }
+
+    //TODO: check for redudnacy
+    public String getDateString() {
+        StringBuilder gameDetails = new StringBuilder();
+
+        //code learned from https://mkyong.com/java8/java-8-how-to-format-localdatetime/
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDatetime = this.getCreationDateTime().format(formatter);
+        gameDetails.append("\n (").append(formattedDatetime).append(")\n");
+
+        return gameDetails.toString();
+    }
+
     /**
      * Gets the date and time the game was made
      * @return LocalDateTime object created on this class instantiation
@@ -89,13 +114,7 @@ public class Game {
         //print all the player's scores
         StringBuilder gameDetails = new StringBuilder();
 
-        for (int i = 0; i < this.getPlayerCount(); i++) {
-            gameDetails.append(this.getScoresAt(i));
-            //only prints vs. between games and not at the end
-            if (!(i ==(this.getPlayerCount() - 1))) {
-                gameDetails.append(" vs. ");
-            }
-        }
+        gameDetails.append(getPoints());
 
         //print winners
         int winnerCount = this.getWinnerCount();

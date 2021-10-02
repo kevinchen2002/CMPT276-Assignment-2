@@ -1,5 +1,8 @@
 package cmpt276.assignment2;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
 
@@ -8,9 +11,11 @@ import ca.cmpt276.as2.model.*;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -44,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
     public void onContentChanged() {
         super.onContentChanged();
 
-//        TextView emptyGamesMessage = findViewById(R.id.emptyGameMessage);
-//        ImageView pointingArrow = findViewById(R.id.helperArrow);
         ListView gameList = findViewById(R.id.gameListView);
         Group noGames = findViewById(R.id.noGamesGroup);
 
@@ -98,14 +101,57 @@ public class MainActivity extends AppCompatActivity {
 
     void showGameList() {
 
-        List<String> toString = gameManager.getAllGames().stream().map(Game::toString).collect(Collectors.toList());
+//        List<String> toString = gameManager.getAllGames().stream().map(Game::toString).collect(Collectors.toList());
 
-        ListView listView = (ListView) findViewById(R.id.gameListView);
-        ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, toString);
-        adapter.notifyDataSetChanged();
-        listView.setAdapter(adapter);
+//        ListView listView = (ListView) findViewById(R.id.gameListView);
+//        ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, toString);
+//        adapter.notifyDataSetChanged();
+//        listView.setAdapter(adapter);
+
+        ArrayAdapter<Game> gameAdapter = new MyListAdapter();
+        ListView complexGamesView = (ListView) findViewById(R.id.gameListView);
+        complexGamesView.setAdapter(gameAdapter);
 
         saveGame();
+    }
+
+    private class MyListAdapter extends ArrayAdapter<Game> {
+        public MyListAdapter() {
+            super(MainActivity.this, R.layout.game_layout, gameManager.getAllGames());
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            //get a new view
+            View itemView = convertView;
+            if (itemView == null) {
+                itemView = getLayoutInflater().inflate(R.layout.game_layout, parent, false);
+            }
+
+            //populate list
+            Game currentGame = gameManager.getGameAt(position);
+
+            //fill the view
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.game_image);
+            if (currentGame.getWinnerCount() > 1) {
+                imageView.setImageResource(R.drawable.nowin_icon);
+                //TODO: implement method to make this not so long and awful
+            } else if (currentGame.getWinnersNumAt(0) == 1) {
+                imageView.setImageResource(R.drawable.win1_icon);
+            } else {
+                imageView.setImageResource(R.drawable.win2_icon);
+            }
+
+            //TODO: make gamemanger have an easier to use method here
+            TextView scoreView = (TextView) itemView.findViewById(R.id.game_points);
+            scoreView.setText(currentGame.getPoints());
+
+            TextView dateView = (TextView) itemView.findViewById(R.id.game_date);
+            dateView.setText(currentGame.getDateString());
+
+            return itemView;
+        }
     }
 
     /*
@@ -117,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                TextView textView = (TextView) viewClicked;
                 GameManager gameList = GameManager.getInstance();
                 Game clickedGame = gameList.getGameAt(position);
                 int playerNumber = clickedGame.getPlayerCount();
