@@ -1,7 +1,6 @@
 /*
 Game represents a game played by 1 to 4 players, also stores when the game was created
 stores which player won the game
-//TODO: describe class better
  */
 
 package ca.cmpt276.as2.model;
@@ -16,10 +15,6 @@ public class Game {
     private final ArrayList<PlayerScore> players = new ArrayList<>();
     private final ArrayList<PlayerScore> winners = new ArrayList<>();
     private final LocalDateTime creationDateTime;
-
-    public Game() {
-        this.creationDateTime = LocalDateTime.now();
-    }
 
     public Game(LocalDateTime createTimeAndDate) {
         this.creationDateTime = createTimeAndDate;
@@ -88,7 +83,6 @@ public class Game {
         return  gameDetails.toString();
     }
 
-    //TODO: check for redudnacy
     public String getDateString() {
         StringBuilder gameDetails = new StringBuilder();
 

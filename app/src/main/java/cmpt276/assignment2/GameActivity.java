@@ -1,9 +1,9 @@
 package cmpt276.assignment2;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 import ca.cmpt276.as2.model.Game;
 import ca.cmpt276.as2.model.GameManager;
@@ -26,52 +27,60 @@ import ca.cmpt276.as2.model.PlayerScore;
 
 public class GameActivity extends AppCompatActivity {
 
-    private LocalDateTime gameCreationDateTime = LocalDateTime.now();
+    private final LocalDateTime gameCreationDateTime = LocalDateTime.now();
     private int currentGame = 0;
     SharedPreferences sp;
+    private final GameManager gameManager = GameManager.getInstance();
 
+    @SuppressLint("ApplySharedPref")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        getSupportActionBar().setTitle("Add New Game");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Add New Game");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sp = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
 
-        //TODO: find a way to reduce redundancy in the formatter
-        TextView dateCreateText = (TextView) findViewById(R.id.dateCreateText);
+        Intent intent = getIntent();
+        this.currentGame = intent.getIntExtra("gamePosition", -1);
+
+        if (currentGame != -1) {
+            getSupportActionBar().setTitle("Edit Game");
+            previewGameResults();
+        }
+
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("currentGame", currentGame);
+        editor.commit();
+
+        formatDateTime();
+        setDefaultValues(intent);
+        endActivityButton();
+        deleteGameButton();
+    }
+
+    private void formatDateTime() {
+        //As per Brian's video tutorials, redundant casting is safe.
+        @SuppressWarnings("RedundantCast") TextView dateCreateText = (TextView) findViewById(R.id.dateCreateText);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDatetime = gameCreationDateTime.format(formatter);
         dateCreateText.setText(formattedDatetime);
+    }
 
-        Intent intent = getIntent();
-        int gameIndex = intent.getIntExtra("gamePosition", -1);
-        this.currentGame = gameIndex;
-
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putInt("currentGame", gameIndex);
-        editor.commit();
-
+    private void setDefaultValues(Intent intent) {
         setDefaultValue(intent.getIntExtra("p1NumCards", 0), R.id.p1NumCards);
         setDefaultValue(intent.getIntExtra("p2NumCards", 0), R.id.p2NumCards);
         setDefaultValue(intent.getIntExtra("p1Sum", 0), R.id.p1Sum);
         setDefaultValue(intent.getIntExtra("p2Sum", 0), R.id.p2Sum);
         setDefaultValue(intent.getIntExtra("p1Wagers", 0), R.id.p1Wagers);
         setDefaultValue(intent.getIntExtra("p2Wagers", 0), R.id.p2Wagers);
-
-        if (gameIndex != -1) {
-            getSupportActionBar().setTitle("Edit Game");
-            previewGameResults();
-        }
-
-        endActivityButton(gameIndex);
-        deleteGameButton(gameIndex);
-
     }
 
+    @SuppressLint("SetTextI18n")
     private void setDefaultValue(int valueToSet, int id) {
-        EditText dataEntry = (EditText) this.findViewById(id);
+        //As per Brian's video tutorials, redundant casting is safe.
+        @SuppressWarnings("RedundantCast") EditText dataEntry = (EditText) this.findViewById(id);
         dataEntry.setText(""+valueToSet);
 
         dataEntry.addTextChangedListener(new TextWatcher() {
@@ -92,10 +101,8 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void previewGameResults() {
-        //FIX: crash due to values being left empty.
-        //code that calculates the score
-
         try {
             int p1Score = PlayerScore.calculatePlayerScore(parseFromTextEntry(R.id.p1NumCards),
                     parseFromTextEntry(R.id.p1Sum),
@@ -103,52 +110,48 @@ public class GameActivity extends AppCompatActivity {
             int p2Score = PlayerScore.calculatePlayerScore(parseFromTextEntry(R.id.p2NumCards),
                     parseFromTextEntry(R.id.p2Sum),
                     parseFromTextEntry(R.id.p2Wagers));
-            TextView p1ScoreText = (TextView) findViewById(R.id.p1Score);
+            //As per Brian's video tutorials, redundant casting is safe.
+            @SuppressWarnings("RedundantCast") TextView p1ScoreText = (TextView) findViewById(R.id.p1Score);
             p1ScoreText.setText("" + p1Score);
-            TextView p2ScoreText = (TextView) findViewById(R.id.p2Score);
+            @SuppressWarnings("RedundantCast") TextView p2ScoreText = (TextView) findViewById(R.id.p2Score);
             p2ScoreText.setText("" + p2Score);
 
-
-            //show score
             String winnerMessage = "Game tied";
             if (p1Score > p2Score) {
                 winnerMessage = "Player 1 won.";
             } else if (p2Score > p1Score) {
                 winnerMessage = "Player 2 won.";
             }
-            TextView winnerText = (TextView) findViewById((R.id.winnerText));
+            //As per Brian's video tutorials, redundant casting is safe.
+            @SuppressWarnings("RedundantCast") TextView winnerText = (TextView) findViewById((R.id.winnerText));
             winnerText.setText(winnerMessage);
         } catch (NumberFormatException e){
             //do nothing
         }
     }
 
-    private void endActivityButton(int gameIndex) {
-        Button btn = (Button) findViewById(R.id.end_add_game);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                enterCards(gameIndex);
-                finish();
-            }
+    private void endActivityButton() {
+        //As per Brian's video tutorials, redundant casting is safe.
+        @SuppressWarnings("RedundantCast") Button btn = (Button) findViewById(R.id.end_add_game);
+        btn.setOnClickListener(v -> {
+            enterCards();
+            finish();
         });
     }
 
-    private void deleteGameButton(int gameIndex) {
-        Button btn = (Button) findViewById(R.id.delete_game_btn);
+    private void deleteGameButton() {
+        //As per Brian's video tutorials, redundant casting is safe.
+        @SuppressWarnings("RedundantCast") Button btn = (Button) findViewById(R.id.delete_game_btn);
         if (currentGame == -1) {
             btn.setVisibility(View.GONE);
         }
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btn.setOnClickListener(v -> {
 
-                FragmentManager manager = getSupportFragmentManager();
-                ConfirmDeleteFragment dialog = new ConfirmDeleteFragment();
-                dialog.show(manager, "MessageDialog");
+            FragmentManager manager = getSupportFragmentManager();
+            ConfirmDeleteFragment dialog = new ConfirmDeleteFragment();
+            dialog.show(manager, "MessageDialog");
 
-                Log.i("TAG", "just showed dialog");
-            }
+            Log.i("TAG", "just showed dialog");
         });
     }
 
@@ -168,15 +171,14 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private int parseFromTextEntry(int id) throws NumberFormatException{
-        EditText textEntry = (EditText) findViewById(id);
+        //As per Brian's video tutorials, redundant casting is safe.
+        @SuppressWarnings("RedundantCast") EditText textEntry = (EditText) findViewById(id);
         String input = textEntry.getText().toString();
         return Integer.parseInt(input);
-
     }
 
-    private void enterCards(int gameIndex) {
+    private void enterCards() {
         try {
-
             int p1NumCards = parseFromTextEntry(R.id.p1NumCards);
             int p2NumCards = parseFromTextEntry(R.id.p2NumCards);
             int p1Sum = parseFromTextEntry(R.id.p1Sum);
@@ -184,16 +186,15 @@ public class GameActivity extends AppCompatActivity {
             int p1Wagers = parseFromTextEntry(R.id.p1Wagers);
             int p2Wagers = parseFromTextEntry(R.id.p2Wagers);
 
-            GameManager test = GameManager.getInstance();
-            Game testGame = new Game(gameCreationDateTime);
-            testGame.addPlayer(new PlayerScore(0, p1NumCards, p1Sum, p1Wagers));
-            testGame.addPlayer(new PlayerScore(1, p2NumCards, p2Sum, p2Wagers));
+            Game newGame = new Game(gameCreationDateTime);
+            newGame.addPlayer(new PlayerScore(0, p1NumCards, p1Sum, p1Wagers));
+            newGame.addPlayer(new PlayerScore(1, p2NumCards, p2Sum, p2Wagers));
 
-            if (gameIndex == -1) {
-                test.addGame(testGame);
+            if (currentGame == -1) {
+                gameManager.addGame(newGame);
             }
             else {
-                test.replaceGame(gameIndex, testGame);
+                gameManager.replaceGame(currentGame, newGame);
             }
 
             Log.i("DemoInitialApp", "Player 1: " + p1NumCards);
@@ -205,7 +206,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void deleteGame(int gameIndex) {
-        GameManager gameManager = GameManager.getInstance();
         gameManager.deleteGameAt(gameIndex);
     }
 

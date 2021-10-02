@@ -12,8 +12,8 @@ public class PlayerScore {
 
     private final int playerNumber;
     private final int cardPlayed;
-    private int sumOfCards;
-    private int numOfWagers;
+    private final int sumOfCards;
+    private final int numOfWagers;
 
     /**
      * Constructs the player score class with given parameters
