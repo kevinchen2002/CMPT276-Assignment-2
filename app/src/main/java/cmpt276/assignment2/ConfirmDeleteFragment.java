@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
@@ -14,8 +13,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+/**
+ * ConfirmDeleteFragment is used to confirm whether the user wants to delete a selected game.
+ * It is called by the delete button, which appears if the user has selected a game.
+ */
 public class ConfirmDeleteFragment extends AppCompatDialogFragment {
     SharedPreferences sp;
+
+    /**
+     * This opens a dialog prompting the user to confirm their action.
+     * Should the user confirm the deletion, a SharedPreference is used to retrieve the index.
+     * The deleteGame method is then called from GameActivity to remove the selected game.
+     * @param savedInstanceState default argument given by Android.
+     * @return the dialog box.
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -37,8 +48,6 @@ public class ConfirmDeleteFragment extends AppCompatDialogFragment {
                     //don't do anything, just end
                     break;
             }
-            Log.i("TAG", "You clicked the dialog button");
-
         };
         return new AlertDialog.Builder(getActivity())
                 .setTitle("Are you sure?")

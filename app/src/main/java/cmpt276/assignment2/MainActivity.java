@@ -12,7 +12,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -41,12 +40,11 @@ import java.util.Objects;
  * Redundant Cast warnings have been suppressed as Brian has stated in his videos they are safe.
  */
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "DemoInitialApp";
     private final GameManager gameManager = GameManager.getInstance();
     SharedPreferences sp;
 
     /**
-     * Runs on creation.
+     * Runs on creation, sets up buttons and title.
      * @param savedInstanceState default argument given by Android.
      */
     @Override
@@ -76,12 +74,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Refreshes the game list when returning back to this activity.
+     * Refreshes the game list when returning back to this activity from GameActivity.
      */
     @Override
     protected void onResume() {
         super.onResume();
-
         showGameList();
     }
 
@@ -97,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Creates an adapter for the gameList to turn it into a LisView.
+     * Creates an adapter for the gameList to turn it into a ListView.
      */
     void showGameList() {
         ArrayAdapter<Game> gameAdapter = new MyListAdapter();
@@ -169,11 +166,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //TODO: check if this class implementation can remove some repeated code in saveGame and loadGame.
     /**
      * LocalDateTimeJSONReader is used to read and write LocalDateTime objects to JSON files.
+     * This class is used to construct myGson in saveGame and loadGame.
+     * Source: Dr. Victor Cheung, CMPT213 Fall 2021, Assignment 1.
+     * Website describing the use of custom type adapters with Gson:
+     * https://www.tutorialspoint.com/gson/gson_custom_adapters.htm
      */
-    private class LocalDateTimeJSONReader extends TypeAdapter<LocalDateTime> {
+    private static class LocalDateTimeJSONReader extends TypeAdapter<LocalDateTime> {
         @Override
         public void write(JsonWriter jsonWriter,
                           LocalDateTime localDateTime) throws IOException {
@@ -187,51 +187,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Saves the game manager and all of its games to a JSON file on shutdown.
-     * TODO: find where Victor got this code from and give credit.
+     * Serializes the game manager using GSON, the saves resulting string to a SharedPreference.
      */
     @SuppressLint("ApplySharedPref")
     void saveGame() {
         SharedPreferences.Editor editor = sp.edit();
         Gson myGson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
-                new TypeAdapter<LocalDateTime>() {
-                    @Override
-                    public void write(JsonWriter jsonWriter,
-                                      LocalDateTime localDateTime) throws IOException {
-                        jsonWriter.value(localDateTime.toString());
-                    }
-                    @Override
-                    public LocalDateTime read(JsonReader jsonReader) throws IOException {
-                        return LocalDateTime.parse(jsonReader.nextString());
-                    }
+                new LocalDateTimeJSONReader() {
                 }).create();
 
         String jsonString = myGson.toJson(gameManager.getAllGames());
-        Log.i(TAG, jsonString); //TODO: needed?
         editor.putString("gameList", jsonString);
         editor.commit();
     }
 
     /**
-     * Loads JSON file and adds games to GameList on startup.
+     * Retrieves json string from SharedPreference, deserializes string into the game manager.
      */
     void loadGame() {
         Gson myGson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
-                new TypeAdapter<LocalDateTime>() {
-                    @Override
-                    public void write(JsonWriter jsonWriter,
-                                      LocalDateTime localDateTime) throws IOException {
-                        jsonWriter.value(localDateTime.toString());
-                    }
-                    @Override
-                    public LocalDateTime read(JsonReader jsonReader) throws IOException {
-                        return LocalDateTime.parse(jsonReader.nextString());
-                    }
+                new LocalDateTimeJSONReader() {
                 }).create();
 
         String jsonString = sp.getString("gameList", "");
         if (!jsonString.equals("")) {
-            //Type deserialization taken from https://stackoverflow.com/questions/5554217/google-gson-deserialize-listclass-object-generic-type
+            //Type deserialization taken from:
+            //https://stackoverflow.com/questions/5554217/google-gson-deserialize-listclass-object-generic-type
             Type listType = new TypeToken<ArrayList<Game>>() {}.getType();
             gameManager.setAllGames(myGson.fromJson(jsonString, listType));
         }

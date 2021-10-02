@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +29,7 @@ import ca.cmpt276.as2.model.PlayerScore;
  * user to enter data about the game and those fields can be edited to change data about a current
  * game. Has save and delete buttons at the bottom and prompts when the user deletes a game or
  * leaves the activity without saving.
- * Redundant Cast warnings have been suppressed as Brian has stated in his videos they are safe.
+ * Redundant Cast warnings have been suppressed as Brian has stated in his video tutorials that they are safe.
  */
 public class GameActivity extends AppCompatActivity {
     private final LocalDateTime gameCreationDateTime = LocalDateTime.now();
@@ -59,7 +58,7 @@ public class GameActivity extends AppCompatActivity {
             previewGameResults();
         }
 
-        //uses shared preferences to pass deleting information to fragment
+        //uses SharedPreferences to pass the game index to ConfirmDeleteFragment
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt("currentGame", currentGame);
         editor.commit();
@@ -86,7 +85,7 @@ public class GameActivity extends AppCompatActivity {
 
     /**
      * Uses setEditTextAttributes to assign attributes to the 6 EditTexts
-     * @param intent //TODO: @Kevin pls explain what this means
+     * @param intent retrieves extras from the intent and sets them to the fields
      */
     private void initializeTextFields(Intent intent) {
         setEditTextAttributes(intent.getIntExtra("p1NumCards", 0), R.id.p1NumCards);
@@ -209,8 +208,6 @@ public class GameActivity extends AppCompatActivity {
             FragmentManager manager = getSupportFragmentManager();
             ConfirmDeleteFragment dialog = new ConfirmDeleteFragment();
             dialog.show(manager, "MessageDialog");
-
-            Log.i("TAG", "just showed dialog");
         });
     }
 
@@ -236,10 +233,9 @@ public class GameActivity extends AppCompatActivity {
         return true;
     }
 
-    //TODO: does it have to quit when an invalid input is given or should it stay on the same screen to give the user a chance to re-enter data?
     /**
-     * Reads all the user input and attempts to save as a new Game. Gives toast and exits if any
-     * input is invalid
+     * Reads all the user input and attempts to save as a new Game.
+     * Displays toast upon exit if input is invalid or empty.
      */
     private void saveGame() {
         try {
@@ -267,7 +263,6 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    //TODO: Could this not be called in deleteGameButton or is that not how it works
     /**
      * Deletes game from game manager at the specified index.
      * @param index of the game you want to delete
@@ -276,7 +271,11 @@ public class GameActivity extends AppCompatActivity {
         gameManager.deleteGameAt(index);
     }
 
-    //TODO: javadoc for this because I don't understand it.
+    /**
+     * Links GameActivity with the MainActivity
+     * @param context pass in the previous activity (MainActivity)
+     * @return return this activity so that it can be launched in main
+     */
     public static Intent makeIntent(Context context) {
         return new Intent(context, GameActivity.class);
     }

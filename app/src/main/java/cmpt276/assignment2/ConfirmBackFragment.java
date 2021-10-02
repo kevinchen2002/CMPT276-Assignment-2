@@ -4,14 +4,23 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+/**
+ * ConfirmBackFragment is used to confirm whether the user wants to exit without saving.
+ * It handles the Android back button and the back button on the AppBar.
+ */
 public class ConfirmBackFragment extends AppCompatDialogFragment {
+    /**
+     * This opens a dialog prompting the user to confirm their action.
+     * The GameActivity finishes if the user presses "Ok"
+     * @param savedInstanceState default argument given by Android.
+     * @return the dialog box.
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog( Bundle savedInstanceState) {
@@ -26,7 +35,6 @@ public class ConfirmBackFragment extends AppCompatDialogFragment {
                     //don't do anything, just end
                     break;
             }
-            Log.i("TAG", "You clicked the dialog button");
         };
         return new AlertDialog.Builder(getActivity())
                 .setTitle("Are you sure?")
