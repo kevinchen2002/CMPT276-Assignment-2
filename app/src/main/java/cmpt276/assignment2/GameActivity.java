@@ -29,7 +29,6 @@ import ca.cmpt276.as2.model.PlayerScore;
  * user to enter data about the game and those fields can be edited to change data about a current
  * game. Has save and delete buttons at the bottom and prompts when the user deletes a game or
  * leaves the activity without saving.
- * Redundant Cast warnings have been suppressed as Brian has stated in his video tutorials that they are safe.
  */
 public class GameActivity extends AppCompatActivity {
     private final LocalDateTime gameCreationDateTime = LocalDateTime.now();
@@ -78,8 +77,7 @@ public class GameActivity extends AppCompatActivity {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formattedDatetime = gameCreationDateTime.format(formatter);
 
-        //As per Brian's video tutorials, redundant casting is safe.
-        @SuppressWarnings("RedundantCast") TextView dateCreateText = (TextView) findViewById(R.id.dateCreateText);
+        TextView dateCreateText = (TextView) findViewById(R.id.dateCreateText);
         dateCreateText.setText(formattedDatetime);
     }
 
@@ -103,8 +101,7 @@ public class GameActivity extends AppCompatActivity {
      */
     @SuppressLint("SetTextI18n")
     private void setEditTextAttributes(int valueToSet, int id) {
-        //As per Brian's video tutorials, redundant casting is safe.
-        @SuppressWarnings("RedundantCast") EditText dataEntry = (EditText) this.findViewById(id);
+        EditText dataEntry = (EditText) this.findViewById(id);
         if (currentGame != -1) {
             dataEntry.setText(""+valueToSet);
         }
@@ -132,8 +129,7 @@ public class GameActivity extends AppCompatActivity {
      * @throws NumberFormatException if trying to read but no user input.
      */
     private int parseFromTextEntry(int id) throws NumberFormatException{
-        //As per Brian's video tutorials, redundant casting is safe.
-        @SuppressWarnings("RedundantCast") EditText textEntry = (EditText) findViewById(id);
+        EditText textEntry = (EditText) findViewById(id);
         String input = textEntry.getText().toString();
         return Integer.parseInt(input);
     }
@@ -146,10 +142,9 @@ public class GameActivity extends AppCompatActivity {
     private void previewGameResults() {
         int p1Score = 0;
         int p2Score = 0;
-        //As per Brian's video tutorials, redundant casting is safe.
-        @SuppressWarnings("RedundantCast") TextView p1ScoreText = (TextView) findViewById(R.id.p1Score);
-        @SuppressWarnings("RedundantCast") TextView p2ScoreText = (TextView) findViewById(R.id.p2Score);
-        @SuppressWarnings("RedundantCast") TextView winnerText = (TextView) findViewById((R.id.winnerText));
+        TextView p1ScoreText = (TextView) findViewById(R.id.p1Score);
+        TextView p2ScoreText = (TextView) findViewById(R.id.p2Score);
+        TextView winnerText = (TextView) findViewById((R.id.winnerText));
         try {
             p1Score = PlayerScore.calculatePlayerScore(parseFromTextEntry(R.id.p1NumCards),
                     parseFromTextEntry(R.id.p1Sum),
@@ -186,8 +181,7 @@ public class GameActivity extends AppCompatActivity {
      * Wires up save button to calculate score and save game when tapped.
      */
     private void saveGameButton() {
-        //As per Brian's video tutorials, redundant casting is safe.
-        @SuppressWarnings("RedundantCast") Button btn = (Button) findViewById(R.id.end_add_game);
+        Button btn = (Button) findViewById(R.id.end_add_game);
         btn.setOnClickListener(v -> {
             saveGame();
             finish();
@@ -199,8 +193,7 @@ public class GameActivity extends AppCompatActivity {
      * added.
      */
     private void deleteGameButton() {
-        //As per Brian's video tutorials, redundant casting is safe.
-        @SuppressWarnings("RedundantCast") Button btn = (Button) findViewById(R.id.delete_game_btn);
+        Button btn = (Button) findViewById(R.id.delete_game_btn);
         if (currentGame == -1) {
             btn.setVisibility(View.GONE);
         }
@@ -246,6 +239,13 @@ public class GameActivity extends AppCompatActivity {
             int p1Wagers = parseFromTextEntry(R.id.p1Wagers);
             int p2Wagers = parseFromTextEntry(R.id.p2Wagers);
 
+            if (p1NumCards == 0 && (p1Sum != 0 || p1Wagers != 0)) {
+                throw new IllegalArgumentException();
+            }
+            else if (p2NumCards == 0 && (p2Sum != 0 || p2Wagers != 0)) {
+                throw new IllegalArgumentException();
+            }
+
             Game newGame = new Game(gameCreationDateTime);
             newGame.addPlayer(new PlayerScore(0, p1NumCards, p1Sum, p1Wagers));
             newGame.addPlayer(new PlayerScore(1, p2NumCards, p2Sum, p2Wagers));
@@ -260,6 +260,9 @@ public class GameActivity extends AppCompatActivity {
         }
         catch (NumberFormatException nfe) {
             Toast.makeText(getApplicationContext(), "Invalid input - fill in all fields", Toast.LENGTH_SHORT).show();
+        }
+        catch (IllegalArgumentException iae) {
+            Toast.makeText(getApplicationContext(), "Invalid input - number of cards is 0 but other fields are not 0", Toast.LENGTH_SHORT).show();
         }
     }
 
