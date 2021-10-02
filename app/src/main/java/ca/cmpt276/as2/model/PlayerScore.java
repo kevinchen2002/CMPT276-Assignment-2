@@ -72,7 +72,7 @@ public class PlayerScore {
         }
         int score = sumOfCards - SUM_CARD_OFFSET;
         score *= (numOfWagers + WAGER_MULTIPLIER_OFFSET);
-        if (cardPlayed >= THRESHOLD_FOR_BONUS) {
+        if ((cardPlayed + numOfWagers) >= THRESHOLD_FOR_BONUS) {
             score += SUM_CARD_OFFSET;
         }
         return score;
