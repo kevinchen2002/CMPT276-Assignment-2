@@ -47,6 +47,8 @@ public class GameActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int gameIndex = intent.getIntExtra("gamePosition", -1);
+        this.currentGame = gameIndex;
+
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt("currentGame", gameIndex);
         editor.commit();
@@ -134,6 +136,9 @@ public class GameActivity extends AppCompatActivity {
 
     private void deleteGameButton(int gameIndex) {
         Button btn = (Button) findViewById(R.id.delete_game_btn);
+        if (currentGame == -1) {
+            btn.setVisibility(View.GONE);
+        }
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
