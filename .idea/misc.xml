@@ -3,19 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/JavaProjects/Fall2021/CMPT276/Assignment2/app/src/main/res/layout/activity_game.xml" value="0.33" />
-        <entry key="..\:/JavaProjects/Fall2021/CMPT276/Assignment2/app/src/main/res/layout/activity_main.xml" value="0.2760416666666667" />
-        <entry key="..\:/JavaProjects/Fall2021/CMPT276/Assignment2/app/src/main/res/layout/confirm_delete_prompt.xml" value="0.309375" />
         <entry key="..\:/SFU/200 level courses/CMPT 276/Assignments/Assignment 2/a2/app/src/main/res/drawable/ic_baseline_warning_24.xml" value="0.23378378378378378" />
         <entry key="..\:/SFU/200 level courses/CMPT 276/Assignments/Assignment 2/a2/app/src/main/res/layout/activity_game.xml" value="0.20742753623188406" />
         <entry key="..\:/SFU/200 level courses/CMPT 276/Assignments/Assignment 2/a2/app/src/main/res/layout/activity_main.xml" value="0.20742753623188406" />
-        <entry key="..\:/SFU/200 level courses/CMPT 276/Assignments/Assignment 2/a2/app/src/main/res/layout/confirm_back_prompt.xml" value="0.11261261261261261" />
+        <entry key="..\:/SFU/200 level courses/CMPT 276/Assignments/Assignment 2/a2/app/src/main/res/layout/confirm_back_prompt.xml" value="0.4" />
         <entry key="..\:/SFU/200 level courses/CMPT 276/Assignments/Assignment 2/a2/app/src/main/res/layout/confirm_delete_prompt.xml" value="0.264" />
         <entry key="..\:/SFU/200 level courses/CMPT 276/Assignments/Assignment 2/a2/app/src/main/res/layout/confirm_prompt.xml" value="0.264" />
+        <entry key="..\:/SFU/200 level courses/CMPT 276/Assignments/Assignment 2/a2/app/src/main/res/layout/game_layout.xml" value="0.21981981981981982" />
         <entry key="..\:/Users/Joshu/Documents/University/Fall2021/CMPT276/cmpt276-assignment-2/app/src/main/res/layout/activity_game.xml" value="0.335" />
         <entry key="..\:/Users/Joshu/Documents/University/Fall2021/CMPT276/cmpt276-assignment-2/app/src/main/res/layout/activity_main.xml" value="0.25" />
       </map>
     </option>
+  </component>
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../Assignment 2 JavaDoc" />
+    <option name="OPTION_SCOPE" value="public" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
