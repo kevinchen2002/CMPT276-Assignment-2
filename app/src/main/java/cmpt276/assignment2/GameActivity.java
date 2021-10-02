@@ -2,23 +2,19 @@ package cmpt276.assignment2;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,7 +26,7 @@ import ca.cmpt276.as2.model.PlayerScore;
 public class GameActivity extends AppCompatActivity {
 
     private LocalDateTime gameCreationDateTime = LocalDateTime.now();
-
+    private int currentGame = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +51,13 @@ public class GameActivity extends AppCompatActivity {
         setDefaultValue(intent.getIntExtra("p1Wagers", 0), R.id.p1Wagers);
         setDefaultValue(intent.getIntExtra("p2Wagers", 0), R.id.p2Wagers);
 
-
         if (gameIndex != -1) {
             getSupportActionBar().setTitle("Edit Game");
             previewGameResults();
         }
 
         endActivityButton(gameIndex);
+        deleteGameButton(gameIndex);
 
     }
 
@@ -136,6 +132,36 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
+    private void deleteGameButton(int gameIndex) {
+        Button btn = (Button) findViewById(R.id.delete_game_btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentManager manager = getSupportFragmentManager();
+                ConfirmDeleteFragment dialog = new ConfirmDeleteFragment();
+                dialog.show(manager, "MessageDialog");
+
+                Log.i("TAG", "just showed dialog");
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager manager = getSupportFragmentManager();
+        ConfirmBackFragment dialog = new ConfirmBackFragment();
+        dialog.show(manager, "MessageDialog");
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        FragmentManager manager = getSupportFragmentManager();
+        ConfirmBackFragment dialog = new ConfirmBackFragment();
+        dialog.show(manager, "MessageDialog");
+        return true;
+    }
+
     private int parseFromTextEntry(int id) throws NumberFormatException{
         EditText textEntry = (EditText) findViewById(id);
         String input = textEntry.getText().toString();
@@ -177,6 +203,4 @@ public class GameActivity extends AppCompatActivity {
     public static Intent makeIntent(Context context) {
         return new Intent(context, GameActivity.class);
     }
-
-
 }

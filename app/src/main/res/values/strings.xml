@@ -22,4 +22,5 @@
     <string name="icon_showing_which_player_won">Icon showing which player won.</string>
     <string name="points_vs_points">points vs points</string>
     <string name="date_goes_here">date goes here</string>
+    <string name="bonus_features_added">Optional Features\n3. Confirm on Cancel Edit\n4. Save Data\n5. Empty State</string>
 </resources>
