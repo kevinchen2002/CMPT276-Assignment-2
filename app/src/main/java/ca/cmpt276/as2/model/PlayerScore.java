@@ -1,9 +1,9 @@
-
 package ca.cmpt276.as2.model;
 /**
- PlayerScore represents the score of a single player in a Game.
- take in number of cards, sum of points, and number of wager cards
- calculate's a player's score
+ * Stores player number and score information of a player in a Game. Calculates the score of a
+ * player when given the cards played, sum of points, and number of wagers. Throws
+ * IllegalArgumentException when given score information is negative or if the cards played is 0
+ * but sum of points or number of wagers is greater than 0.
  */
 public class PlayerScore {
     public static final int WAGER_MULTIPLIER_OFFSET = 1;
@@ -16,11 +16,12 @@ public class PlayerScore {
     private final int numOfWagers;
 
     /**
-     * Constructs the player score class with given parameters
+     * Creates new PlayerScore and checks for invalid input.
      * @param givenCardPlayed the number of cards a player played
-     * @param givenSumOfCards the sum of points from the cards the players played
+     * @param givenSumOfCards the sum of points from the player's played point cards
      * @param givenNumOfWagers the number of wager cards the players played
-     * @throws IllegalArgumentException if any given values are negative
+     * @throws IllegalArgumentException if any given values are negative or if cards is 0 but wagers
+     *                                  or sum of card points is greater than 0.
      */
     public PlayerScore(int givenPlayerNumber,
                        int givenCardPlayed,
@@ -49,7 +50,8 @@ public class PlayerScore {
     }
 
     /**
-     * Returns the calculated score of the player
+     * Calculates and returns the player's score based off the cards they played. Returns 0 if
+     * no cards have been played.
      * @return integer of the player's calculated score
      */
     public int getScore() {
@@ -77,21 +79,33 @@ public class PlayerScore {
     }
 
     /**
-     * Returns a player's number in a Game
-     * @return int value from 1 - 4
+     * Gets the player number starting at 1 for humans to understand
+     * @return the player number + 1
      */
     public int getPlayerNumber() {
         return playerNumber;
     }
 
+    /**
+     * Gets the cards played by the player.
+     * @return int of the cards played by player.
+     */
     public int getCardPlayed() {
         return cardPlayed;
     }
 
+    /**
+     * Gets the sum of the points of the player's cards.
+     * @return int of the player's points.
+     */
     public int getSumOfCards() {
         return sumOfCards;
     }
 
+    /**
+     * Gets the the wagers the player played.
+     * @return int of number of wager cards of a player.
+     */
     public int getNumOfWagers() {
         return numOfWagers;
     }

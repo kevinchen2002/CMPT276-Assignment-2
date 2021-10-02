@@ -31,6 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:text="@string/default_no_score"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/p2Score"
         app:layout_constraintEnd_toEndOf="@+id/p1Wagers"
@@ -147,6 +148,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:text="@string/default_no_score"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/p2Wagers"
         app:layout_constraintStart_toStartOf="@+id/p2Wagers"
@@ -237,7 +239,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
         android:layout_marginBottom="64dp"
-        android:text="Delete"
+        android:text="@string/delete_message"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

@@ -34,22 +34,21 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * MainActivity is the home screen of the app. It shows an empty screen when no games are added and
+ * a complex ListView of all the games when there are some. A FAB at the bottom allows for users
+ * to add new games.
+ * Redundant Cast warnings have been suppressed as Brian has stated in his videos they are safe.
+ */
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "DemoInitialApp";
     private final GameManager gameManager = GameManager.getInstance();
     SharedPreferences sp;
 
-    @Override
-    public void onContentChanged() {
-        super.onContentChanged();
-
-        ListView gameList = findViewById(R.id.gameListView);
-        Group noGames = findViewById(R.id.noGamesGroup);
-
-        gameList.setEmptyView(noGames);
-    }
-
-
+    /**
+     * Runs on creation.
+     * @param savedInstanceState default argument given by Android.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +63,21 @@ public class MainActivity extends AppCompatActivity {
         showGameList();
     }
 
+    /**
+     * Sets the empty state of the app when there are no games.
+     */
+    @Override
+    public void onContentChanged() {
+        super.onContentChanged();
+
+        ListView gameList = findViewById(R.id.gameListView);
+        Group noGames = findViewById(R.id.noGamesGroup);
+        gameList.setEmptyView(noGames);
+    }
+
+    /**
+     * Refreshes the game list when returning back to this activity.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -71,16 +85,20 @@ public class MainActivity extends AppCompatActivity {
         showGameList();
     }
 
+    /**
+     * Wires the FAB to open the game activity when tapped.
+     */
     void floatingActionBtn () {
         FloatingActionButton btn = findViewById(R.id.btnAddNewGame);
         btn.setOnClickListener(v -> {
-            Log.i(TAG, "Thia is a magic log message");
-
             Intent launchNewGame = GameActivity.makeIntent(MainActivity.this);
             startActivity(launchNewGame);
         });
     }
 
+    /**
+     * Creates an adapter for the gameList to turn it into a LisView.
+     */
     void showGameList() {
         ArrayAdapter<Game> gameAdapter = new MyListAdapter();
         //As per Brian's video tutorials, redundant casting is safe.
@@ -90,6 +108,9 @@ public class MainActivity extends AppCompatActivity {
         saveGame();
     }
 
+    /**
+     * MyListAdapter adapts the content of ArrayList into a complex list view.
+     */
     private class MyListAdapter extends ArrayAdapter<Game> {
         public MyListAdapter() {
             super(MainActivity.this, R.layout.game_layout, gameManager.getAllGames());
@@ -98,13 +119,11 @@ public class MainActivity extends AppCompatActivity {
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
             View itemView = convertView;
+            Game currentGame = gameManager.getGameAt(position);
             if (itemView == null) {
                 itemView = getLayoutInflater().inflate(R.layout.game_layout, parent, false);
             }
-
-            Game currentGame = gameManager.getGameAt(position);
 
             //As per Brian's video tutorials, redundant casting is safe.
             @SuppressWarnings("RedundantCast") ImageView imageView = (ImageView) itemView.findViewById(R.id.game_image);
@@ -118,14 +137,18 @@ public class MainActivity extends AppCompatActivity {
 
             //As per Brian's video tutorials, redundant casting is safe.
             @SuppressWarnings("RedundantCast") TextView scoreView = (TextView) itemView.findViewById(R.id.game_points);
-            scoreView.setText(currentGame.getPoints());
             @SuppressWarnings("RedundantCast") TextView dateView = (TextView) itemView.findViewById(R.id.game_date);
+            scoreView.setText(currentGame.getPoints());
             dateView.setText(currentGame.getDateString());
 
             return itemView;
         }
     }
 
+    /**
+     * Manages when a user taps a game in the ListView. Starts a new game activity and sends
+     * that game's data as an intent to the activity for editing.
+     */
     private void registerGameClick() {
         //As per Brian's video tutorials, redundant casting is safe.
         @SuppressWarnings("RedundantCast") ListView listView = (ListView) findViewById(R.id.gameListView);
@@ -135,17 +158,38 @@ public class MainActivity extends AppCompatActivity {
 
             Intent intent = new Intent(MainActivity.this, GameActivity.class);
             intent.putExtra("gamePosition", position);
-            intent.putExtra("p1NumCards", clickedGame.getPlayers(0).getCardPlayed());
-            intent.putExtra("p2NumCards", clickedGame.getPlayers(1).getCardPlayed());
-            intent.putExtra("p1Sum", clickedGame.getPlayers(0).getSumOfCards());
-            intent.putExtra("p2Sum", clickedGame.getPlayers(1).getSumOfCards());
-            intent.putExtra("p1Wagers", clickedGame.getPlayers(0).getNumOfWagers());
-            intent.putExtra("p2Wagers", clickedGame.getPlayers(1).getNumOfWagers());
+            intent.putExtra("p1NumCards", clickedGame.getPlayer(0).getCardPlayed());
+            intent.putExtra("p2NumCards", clickedGame.getPlayer(1).getCardPlayed());
+            intent.putExtra("p1Sum", clickedGame.getPlayer(0).getSumOfCards());
+            intent.putExtra("p2Sum", clickedGame.getPlayer(1).getSumOfCards());
+            intent.putExtra("p1Wagers", clickedGame.getPlayer(0).getNumOfWagers());
+            intent.putExtra("p2Wagers", clickedGame.getPlayer(1).getNumOfWagers());
 
             startActivity(intent);
         });
     }
 
+    //TODO: check if this class implementation can remove some repeated code in saveGame and loadGame.
+    /**
+     * LocalDateTimeJSONReader is used to read and write LocalDateTime objects to JSON files.
+     */
+    private class LocalDateTimeJSONReader extends TypeAdapter<LocalDateTime> {
+        @Override
+        public void write(JsonWriter jsonWriter,
+                          LocalDateTime localDateTime) throws IOException {
+            jsonWriter.value(localDateTime.toString());
+        }
+
+        @Override
+        public LocalDateTime read(JsonReader jsonReader) throws IOException {
+            return LocalDateTime.parse(jsonReader.nextString());
+        }
+    }
+
+    /**
+     * Saves the game manager and all of its games to a JSON file on shutdown.
+     * TODO: find where Victor got this code from and give credit.
+     */
     @SuppressLint("ApplySharedPref")
     void saveGame() {
         SharedPreferences.Editor editor = sp.edit();
@@ -163,11 +207,14 @@ public class MainActivity extends AppCompatActivity {
                 }).create();
 
         String jsonString = myGson.toJson(gameManager.getAllGames());
-        Log.i(TAG, jsonString);
+        Log.i(TAG, jsonString); //TODO: needed?
         editor.putString("gameList", jsonString);
         editor.commit();
     }
 
+    /**
+     * Loads JSON file and adds games to GameList on startup.
+     */
     void loadGame() {
         Gson myGson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
                 new TypeAdapter<LocalDateTime>() {

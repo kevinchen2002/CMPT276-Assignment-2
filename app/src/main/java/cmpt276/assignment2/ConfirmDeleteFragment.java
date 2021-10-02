@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDialogFragment;
@@ -29,6 +30,7 @@ public class ConfirmDeleteFragment extends AppCompatDialogFragment {
                     if (gameIndex != -1) {
                         ((GameActivity) requireActivity()).deleteGame(gameIndex);
                     }
+                    Toast.makeText(requireActivity().getApplicationContext(), "Game deleted successfully!", Toast.LENGTH_SHORT).show();
                     requireActivity().finish();
                     break;
                 case DialogInterface.BUTTON_NEGATIVE:

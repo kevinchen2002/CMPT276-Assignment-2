@@ -1,8 +1,3 @@
-/*
-Game Manager stores the games as an ArrayList
-add new game, retrieve specific game from index, and removing game by index
- */
-
 package ca.cmpt276.as2.model;
 
 import androidx.annotation.NonNull;
@@ -10,17 +5,25 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * GameManager handles all of the Games in the program. It can give basic information of the
+ * number of games so TextUI knows how much to print. Also can delete and add new games. It's also
+ * iterable.
+ */
 public class GameManager implements Iterable<Game> {
     private ArrayList<Game> allGames = new ArrayList<>();
-
-    /*
-    Singleton Support
-    Taken from Brian Fraser's Singleton Model video
-     */
     private static GameManager instance;
-    private GameManager(){
+
+    /**
+     * Empty constructor for singleton support
+     */
+    private GameManager() {
     }
 
+    /**
+     * Creates an instance of GameManager if one does not exist.
+     * @return GameManager instance that will be used across the app
+     */
     public static GameManager getInstance() {
         if (instance == null) {
             instance = new GameManager();
@@ -28,44 +31,60 @@ public class GameManager implements Iterable<Game> {
         return instance;
     }
 
+    /**
+     * Overwrites gameList with the shared preference storage.
+     * @param allGames given arrayList to overwrite from shared preference.
+     */
     public void setAllGames(ArrayList<Game> allGames) {
         this.allGames = allGames;
     }
 
+    /**
+     * Gets all games in GameManager.
+     * @return ArrayList containing all the Games.
+     */
     public ArrayList<Game> getAllGames() {
         return allGames;
     }
 
     /**
-     * Add a game to the end of the list
-     * @param newGame the game to be added
+     * Return Game at given index.
+     * @param index address of the Game required.
+     * @return Game object at the index in the ArrayList.
+     */
+    public Game getGameAt(int index) {
+        return this.allGames.get(index);
+    }
+
+    /**
+     * Add a game to the end of the list.
+     * @param newGame the game to be added.
      */
     public void addGame(Game newGame) {
         this.allGames.add(newGame);
     }
 
-    public void replaceGame(int gameIndex, Game editedGame) {
-        this.allGames.set(gameIndex, editedGame);
+    /**
+     * Replaces game at index with given game. Used for editing games.
+     * @param index the index of the game you want to replace.
+     * @param editedGame the replacement Game object.
+     */
+    public void replaceGame(int index, Game editedGame) {
+        this.allGames.set(index, editedGame);
     }
 
     /**
      * Delete a game from the array.
-     * @param indexToDelete array index of the game to be deleted
+     * @param index array index of the game to be deleted
      */
-    public void deleteGameAt(int indexToDelete) {
-        this.allGames.remove(indexToDelete);
+    public void deleteGameAt(int index) {
+        this.allGames.remove(index);
     }
 
     /**
-     * Return Game at given index
-     * @param indexToGet address of the Game required
-     * @return Game object at the index in the ArrayList
+     * Makes the class iterable
+     * @return iterator of Game.
      */
-    public Game getGameAt(int indexToGet) {
-        return this.allGames.get(indexToGet);
-    }
-
-    //makes the class iterable
     @NonNull
     @Override
     public Iterator<Game> iterator() {
