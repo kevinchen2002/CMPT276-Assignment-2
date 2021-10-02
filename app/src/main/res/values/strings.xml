@@ -18,7 +18,7 @@
     <string name="tap_to_add_a_game">Tap to add a game!</string>
     <string name="arrow_description">Arrow pointing to add a game.</string>
     <string name="woman_description">Woman shrugging to indicate there are no games.</string>
-    <string name="bonus_features_added">Optional Features\n2. Complex List View\n4. Save Data\n5. Empty State</string>
+    <string name="bonus_features_added">Optional Features\n1.Edit and Delete Game\n2. Complex List View\n3. Confirm on Cancel Edit\n4. Save Data\n5. Empty State</string>
     <string name="icon_showing_which_player_won">Icon showing which player won.</string>
     <string name="points_vs_points">points vs points</string>
     <string name="date_goes_here">date goes here</string>

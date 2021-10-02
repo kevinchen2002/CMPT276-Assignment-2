@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,6 +28,7 @@ public class GameActivity extends AppCompatActivity {
 
     private LocalDateTime gameCreationDateTime = LocalDateTime.now();
     private int currentGame = 0;
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         getSupportActionBar().setTitle("Add New Game");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        sp = getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);
 
         //TODO: find a way to reduce redundancy in the formatter
         TextView dateCreateText = (TextView) findViewById(R.id.dateCreateText);
@@ -43,6 +47,9 @@ public class GameActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int gameIndex = intent.getIntExtra("gamePosition", -1);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("currentGame", gameIndex);
+        editor.commit();
 
         setDefaultValue(intent.getIntExtra("p1NumCards", 0), R.id.p1NumCards);
         setDefaultValue(intent.getIntExtra("p2NumCards", 0), R.id.p2NumCards);
@@ -61,16 +68,9 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-    }
-
     private void setDefaultValue(int valueToSet, int id) {
         EditText dataEntry = (EditText) this.findViewById(id);
         dataEntry.setText(""+valueToSet);
-
 
         dataEntry.addTextChangedListener(new TextWatcher() {
             @Override
@@ -197,7 +197,11 @@ public class GameActivity extends AppCompatActivity {
         catch (NumberFormatException nfe) {
             Toast.makeText(getApplicationContext(), "Invalid input - fill in all fields", Toast.LENGTH_SHORT).show();
         }
+    }
 
+    public void deleteGame(int gameIndex) {
+        GameManager gameManager = GameManager.getInstance();
+        gameManager.deleteGameAt(gameIndex);
     }
 
     public static Intent makeIntent(Context context) {
