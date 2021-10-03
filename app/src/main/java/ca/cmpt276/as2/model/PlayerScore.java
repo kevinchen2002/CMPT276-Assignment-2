@@ -50,22 +50,13 @@ public class PlayerScore {
     }
 
     /**
-     * Calculates and returns the player's score based off the cards they played. Returns 0 if
-     * no cards have been played.
-     * @return integer of the player's calculated score
+     * Allows other classes to calculate the player score without needed an entire player object.
+     * Returns 0 if no cards have been played.
+     * @param cardPlayed int of number of cards played by the player.
+     * @param sumOfCards int of the sum of points on the player's cards.
+     * @param numOfWagers int of the number of wagers a player made.
+     * @return int of the player's score.
      */
-    public int getScore() {
-        if (cardPlayed == 0) {
-            return 0;
-        }
-        int score = sumOfCards - SUM_CARD_OFFSET;
-        score *= (numOfWagers + WAGER_MULTIPLIER_OFFSET);
-        if (cardPlayed >= THRESHOLD_FOR_BONUS) {
-            score += SUM_CARD_OFFSET;
-        }
-        return score;
-    }
-
     public static int calculatePlayerScore(int cardPlayed, int sumOfCards, int numOfWagers) {
         if (cardPlayed == 0) {
             return 0;
@@ -76,6 +67,14 @@ public class PlayerScore {
             score += SUM_CARD_OFFSET;
         }
         return score;
+    }
+
+    /**
+     * Calculates and returns the player's score based off a playerScore's fields.
+     * @return integer of the player's calculated score
+     */
+    public int getScore() {
+        return calculatePlayerScore(cardPlayed, sumOfCards, numOfWagers);
     }
 
     /**
